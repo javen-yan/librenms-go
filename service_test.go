@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/javen-yan/librenms-go"
+	"github.com/javen-yan/librenms-go/types"
 
 	"github.com/stretchr/testify/require"
 )
@@ -96,7 +96,7 @@ func TestClient_CreateService(t *testing.T) {
 
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
-	newServiceRequest := librenms.ServiceCreateRequest{
+	newServiceRequest := types.ServiceCreateRequest{
 		Name:        "Test Service",
 		Description: "This is a test service",
 		IP:          "192.168.1.1",
@@ -133,7 +133,7 @@ func TestClient_UpdateService(t *testing.T) {
 
 	resp, err := testAPIClient.Service.Update(
 		testServiceID,
-		librenms.NewServiceUpdateRequest().SetName("Fancy Test Service"),
+		types.NewServiceUpdateRequest().SetName("Fancy Test Service"),
 	)
 
 	r.NoError(err, "UpdateService returned an error")

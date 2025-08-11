@@ -9,7 +9,8 @@ LibreNMS Go SDK 是一个用于与 LibreNMS API 进行交互的 Go 语言客户�
 
 - **完整的 API 支持**: 支持 LibreNMS API v0 版本的所有主要功能
 - **资源管理**: 提供以下资源的完整 CRUD 操作：
-  - 🚨 告警规则 (Alert Rules)
+  - 🚨 告警管理 (Alerts)
+  - 📋 告警规则 (Alert Rules)
   - 🖥️ 设备管理 (Devices)
   - 👥 设备组 (Device Groups)
   - 📍 位置管理 (Locations)
@@ -18,6 +19,8 @@ LibreNMS Go SDK 是一个用于与 LibreNMS API 进行交互的 Go 语言客户�
   - 🗂️ 库存管理 (Inventory)
   - 🛣️ 路由管理 (Routing)
   - 🔀 交换管理 (Switching)
+  - 💻 系统信息 (System)
+  - 📝 日志管理 (Logs)
 - **类型安全**: 使用 Go 强类型系统，提供类型安全的 API 调用
 - **错误处理**: 完善的错误处理和响应检查
 - **日志支持**: 内置结构化日志记录
@@ -131,6 +134,83 @@ if err != nil {
 }
 ```
 
+#### 日志管理
+
+```go
+// 获取设备的事件日志
+eventLogs, err := client.Logs.ListEventLogs("device-hostname", nil)
+if err != nil {
+    log.Printf("获取事件日志失败: %v", err)
+} else {
+    fmt.Printf("找到 %d 条事件日志\n", len(eventLogs.Logs))
+    for _, logEntry := range eventLogs.Logs {
+        fmt.Printf("- %s: %s\n", logEntry.Datetime, logEntry.Message)
+    }
+}
+
+// 获取设备的系统日志
+sysLogs, err := client.Logs.ListSysLogs("device-hostname", nil)
+if err != nil {
+    log.Printf("获取系统日志失败: %v", err)
+} else {
+    fmt.Printf("找到 %d 条系统日志\n", len(sysLogs.Logs))
+}
+
+// 发送系统日志到 LibreNMS
+messages := types.SyslogsinkRequest{
+    Message: "这是一条测试日志消息",
+    Level:   "info",
+}
+response, err := client.Logs.Syslogsink(messages)
+if err != nil {
+    log.Printf("发送日志失败: %v", err)
+} else {
+    fmt.Printf("日志发送成功: %s\n", response.Status)
+}
+```
+
+## 📁 项目结构
+
+```
+librenms-go/
+├── client.go              # 主要客户端实现
+├── librenms.go            # 客户端工厂函数
+├── errors.go              # 错误定义
+├── logging.go             # 日志配置
+├── system.go              # 系统信息管理
+├── device.go              # 设备管理
+├── devicegroup.go         # 设备组管理
+├── location.go            # 位置管理
+├── service.go             # 服务管理
+├── alert.go               # 告警管理
+├── alertrule.go           # 告警规则管理
+├── ports.go               # 端口管理
+├── inventory.go           # 库存管理
+├── routing.go             # 路由管理
+├── switching.go           # 交换管理
+├── logs.go                # 日志管理
+├── types/                 # 类型定义
+│   ├── base.go            # 基础类型
+│   ├── system.go          # 系统相关类型
+│   ├── device.go          # 设备相关类型
+│   ├── devicegroup.go     # 设备组相关类型
+│   ├── location.go        # 位置相关类型
+│   ├── service.go         # 服务相关类型
+│   ├── alert.go           # 告警相关类型
+│   ├── alertrule.go       # 告警规则相关类型
+│   ├── ports.go           # 端口相关类型
+│   ├── inventory.go       # 库存相关类型
+│   ├── routing.go         # 路由相关类型
+│   ├── switching.go       # 交换相关类型
+│   ├── logs.go            # 日志相关类型
+│   └── switching.go       # 交换类型
+├── examples/              # 使用示例
+│   └── main.go            # 主示例文件
+├── fixtures/              # 测试数据
+├── go.mod                 # Go 模块定义
+└── *_test.go              # 测试文件
+```
+
 ## 📚 API 参考
 
 ### 客户端配置选项
@@ -147,19 +227,20 @@ client, err := librenms.NewClient(
 
 ### 支持的资源类型
 
-| 资源 | 包名 | 主要方法 |
-|------|------|----------|
-| 设备 | `client.Device` | `List()`, `Get()`, `Create()`, `Update()`, `Delete()` |
-| 设备组 | `client.DeviceGroup` | `List()`, `Get()`, `Create()`, `Update()`, `Delete()`, `GetMembers()` |
-| 位置 | `client.Location` | `List()`, `Get()`, `Create()`, `Update()`, `Delete()` |
-| 服务 | `client.Service` | `List()`, `Get()`, `Create()`, `Update()`, `Delete()`, `GetForHost()` |
-| 告警 | `client.Alert` | `List()`, `Get()`, `Ack()` |
-| 告警规则 | `client.AlertRule` | `List()`, `Get()`, `Create()`, `Update()`, `Delete()` |
-| 端口 | `client.Port` | `GetAllPorts()`, `SearchPorts()`, `SearchPortsInField()`, `GetPortsWithMAC()`, `GetPortInfo()`, `GetPortIPInfo()`, `GetPortTransceiver()`, `GetPortDescription()`, `UpdatePortDescription()` |
-| 系统 | `client.System` | `Get()` |
-| 库存 | `client.Inventory` | `GetInventory()`, `GetInventoryForDevice()` |
-| 路由 | `client.Routing` | `ListBGP()`, `GetBGP()`, `UpdateBGPDescription()`, `ListBGPCounters()`, `ListIPAddresses()`, `GetNetworkIPAddresses()`, `ListIPNetworks()`, `ListIPSec()`, `ListOSPF()`, `ListOSPFPorts()`, `ListOSPFv3()`, `ListOSPFv3Ports()`, `ListVRF()`, `GetVRF()`, `ListMPLSServices()`, `ListMPLSSAPs()` |
-| 交换 | `client.Switching` | `GetAllVLANs()`, `GetDeviceVLANs()`, `GetAllLinks()`, `GetDeviceLinks()`, `GetLink()`, `GetPortFDB()`, `GetPortFDBDetail()`, `GetPortNAC()` |
+| 资源 | 包名  |
+|------|------|
+| 系统信息 | `client.System` |
+| 设备 | `client.Device` |
+| 设备组 | `client.DeviceGroup` |
+| 位置 | `client.Location` |
+| 服务 | `client.Service` |
+| 告警 | `client.Alert` |
+| 告警规则 | `client.AlertRule` |
+| 端口 | `client.Port` |
+| 库存 | `client.Inventory` |
+| 路由 | `client.Routing` |
+| 交换 | `client.Switching` |
+| 日志 | `client.Logs` |
 
 ## 🧪 测试
 
@@ -171,7 +252,7 @@ go test ./...
 
 ## 📖 完整示例
 
-查看 `examples/` 目录中的完整示例代码，了解如何使用 SDK 的各种功能。
+查看 `examples/main.go` 文件中的完整示例代码，了解如何使用 SDK 的各种功能。
 
 ## 🔗 相关链接
 

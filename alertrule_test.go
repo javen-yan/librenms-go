@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/javen-yan/librenms-go"
+	"github.com/javen-yan/librenms-go/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -73,7 +73,7 @@ func TestClient_CreateAlertRule(t *testing.T) {
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
 	// Define the alert rule to create using AlertRuleCreateRequest
-	newAlertRuleRequest := librenms.AlertRuleCreateRequest{
+	newAlertRuleRequest := types.AlertRuleCreateRequest{
 		Name:     "Test Alert Rule",
 		Notes:    "This is a test alert rule",
 		Devices:  []int{1, 2, 3},
@@ -108,9 +108,9 @@ func TestClient_UpdateAlertRule(t *testing.T) {
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
 	// Define the alert rule to create using AlertRuleUpdateRequest
-	payload := librenms.AlertRuleUpdateRequest{
+	payload := types.AlertRuleUpdateRequest{
 		ID: testAlertRuleID,
-		AlertRuleCreateRequest: librenms.AlertRuleCreateRequest{
+		AlertRuleCreateRequest: types.AlertRuleCreateRequest{
 			Name:     "Test Alert Rule",
 			Notes:    "This is a test alert rule",
 			Devices:  []int{1, 2, 3},
@@ -133,9 +133,9 @@ func TestClient_UpdateAlertRule_EmptyDevices(t *testing.T) {
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
 	// Define the alert rule to create using AlertRuleUpdateRequest
-	payload := librenms.AlertRuleUpdateRequest{
+	payload := types.AlertRuleUpdateRequest{
 		ID: testAlertRuleID,
-		AlertRuleCreateRequest: librenms.AlertRuleCreateRequest{
+		AlertRuleCreateRequest: types.AlertRuleCreateRequest{
 			Name:     "Test Alert Rule",
 			Notes:    "This is a test alert rule",
 			Disabled: false,
@@ -157,8 +157,8 @@ func TestClient_UpdateAlertRule_MissingID(t *testing.T) {
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
 	// Define the alert rule to create using AlertRuleUpdateRequest
-	payload := librenms.AlertRuleUpdateRequest{
-		AlertRuleCreateRequest: librenms.AlertRuleCreateRequest{
+	payload := types.AlertRuleUpdateRequest{
+		AlertRuleCreateRequest: types.AlertRuleCreateRequest{
 			Name:     "Test Alert Rule",
 			Notes:    "This is a test alert rule",
 			Devices:  []int{1, 2, 3},

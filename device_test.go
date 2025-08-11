@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/javen-yan/librenms-go"
+	"github.com/javen-yan/librenms-go/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -50,7 +50,7 @@ func TestClient_GetDevice(t *testing.T) {
 	r.Equal("1.1.1.1", device.Hostname, "Expected Hostname '1.1.1.1'")
 
 	// verify a Bool field unmarshals correctly
-	r.Equal(librenms.Bool(true), device.SNMPDisable, "Expected SNMPDisable true (1)")
+	r.Equal(types.Bool(true), device.SNMPDisable, "Expected SNMPDisable true (1)")
 }
 
 func TestClient_GetDevices(t *testing.T) {
@@ -72,7 +72,7 @@ func TestClient_GetDevices(t *testing.T) {
 	r.Equal("1.1.1.1", device.Hostname, "Expected Hostname '1.1.1.1'")
 
 	// verify a Bool field unmarshals correctly
-	r.Equal(librenms.Bool(true), device.SNMPDisable, "Expected SNMPDisable true (1)")
+	r.Equal(types.Bool(true), device.SNMPDisable, "Expected SNMPDisable true (1)")
 
 	// verify a Float64 field unmarshals correctly
 	device = deviceResp.Devices[2]
@@ -87,7 +87,7 @@ func TestClient_CreateDevice(t *testing.T) {
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
 	// Define the device to create using DeviceCreateRequest
-	newDeviceRequest := librenms.DeviceCreateRequest{
+	newDeviceRequest := types.DeviceCreateRequest{
 		Hostname:      "192.168.10.5",
 		SNMPVersion:   "v2c",    // Corresponds to 'snmpver' in JSON for request
 		SNMPCommunity: "public", // Corresponds to 'community' in JSON for request
@@ -137,7 +137,7 @@ func TestClient_UpdateDevice(t *testing.T) {
 
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
-	payload := &librenms.DeviceUpdateRequest{
+	payload := &types.DeviceUpdateRequest{
 		Field: []string{"hardware", "port_association_mode"},
 		Data:  []any{"New Hardware", 2},
 	}

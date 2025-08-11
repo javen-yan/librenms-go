@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/javen-yan/librenms-go"
+	"github.com/javen-yan/librenms-go/types"
 
 	"github.com/stretchr/testify/require"
 )
@@ -40,7 +40,7 @@ func TestClient_AckAlert(t *testing.T) {
 
 	resp, err := testAPIClient.Alert.Ack(
 		testAlertID,
-		&librenms.AlertAckRequest{UntilClear: true},
+		&types.AlertAckRequest{UntilClear: true},
 	)
 
 	r.NoError(err, "AckAlert returned an error")
@@ -90,7 +90,7 @@ func TestClient_GetAlerts(t *testing.T) {
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
 	alertResp, err := testAPIClient.Alert.List(
-		librenms.NewAlertsQuery().SetState(1),
+		types.NewAlertsQuery().SetState(1),
 	)
 
 	r.NoError(err, "GetAlerts returned an error")

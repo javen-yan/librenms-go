@@ -1,11 +1,12 @@
 package librenms
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
 	"strconv"
+
+	"github.com/javen-yan/librenms-go/types"
 )
 
 const (
@@ -13,109 +14,24 @@ const (
 	deviceGroupEndpoint = "devicegroups"
 )
 
-type (
-	// DeviceGroup represents a device group in LibreNMS.
-	DeviceGroup struct {
-		ID          int                      `json:"id"`
-		Name        string                   `json:"name"`
-		Description *string                  `json:"desc"`
-		Pattern     *string                  `json:"pattern"`
-		Rules       DeviceGroupRuleContainer `json:"rules"`
-		Type        string                   `json:"type"`
-	}
-
-	// DeviceGroupRuleContainer represents the top-level container for device group rules.
-	DeviceGroupRuleContainer struct {
-		Condition string            `json:"condition"`
-		Joins     [][]string        `json:"joins"`
-		Rules     []DeviceGroupRule `json:"rules"`
-		Valid     bool              `json:"valid"`
-	}
-
-	// DeviceGroupRule represents a rule within a device group. This is a recursive structure.
-	// It can contain nested rules, allowing for complex conditions.
-	//
-	// A terminal section defines id, field, type, input, operator, and value.
-	// A non-terminal section defines condition and a list of rules.
-	DeviceGroupRule struct {
-		ID        string            `json:"id,omitempty"`
-		Condition string            `json:"condition,omitempty"`
-		Field     string            `json:"field,omitempty"`
-		Input     string            `json:"input,omitempty"`
-		Operator  string            `json:"operator,omitempty"`
-		Rules     []DeviceGroupRule `json:"rules,omitempty"`
-		Type      string            `json:"type,omitempty"`
-		Value     string            `json:"value,omitempty"`
-	}
-
-	// DeviceGroupCreateRequest represents the request payload for creating a device group.
-	//
-	// The rules should be a serialized JSON string that matches the DeviceGroupRuleContainer
-	// structure. Define your rules using the DeviceGroupRuleContainer struct and then
-	// serialize it using its JSON() method.
-	DeviceGroupCreateRequest struct {
-		Name        string  `json:"name"`
-		Description *string `json:"desc,omitempty"`
-		Devices     []int   `json:"devices,omitempty"`
-		Rules       *string `json:"rules,omitempty"`
-		Type        string  `json:"type"`
-	}
-
-	// DeviceGroupUpdateRequest represents the request payload for updating a device group.
-	//
-	// The rules should be a serialized JSON string that matches the DeviceGroupRuleContainer
-	// structure. Define your rules using the DeviceGroupRuleContainer struct and then
-	// serialize it using its JSON() method.
-	DeviceGroupUpdateRequest struct {
-		Name        string  `json:"name,omitempty"`
-		Description *string `json:"desc,omitempty"`
-		Devices     []int   `json:"devices,omitempty"`
-		Rules       *string `json:"rules,omitempty"`
-		Type        string  `json:"type,omitempty"`
-	}
-
-	// DeviceGroupResponse represents a response containing a list of device groups from the LibreNMS API.
-	DeviceGroupResponse struct {
-		BaseResponse
-		Groups []DeviceGroup `json:"groups"`
-	}
-
-	// DeviceGroupMember represents a member of a device group.
-	DeviceGroupMember struct {
-		ID int `json:"device_id"`
-	}
-
-	// DeviceGroupMembersResponse represents a response containing the members of a device group.
-	DeviceGroupMembersResponse struct {
-		BaseResponse
-		Devices []DeviceGroupMember `json:"devices"`
-	}
-
-	// DeviceGroupCreateResponse represents a creation response.
-	DeviceGroupCreateResponse struct {
-		BaseResponse
-		ID int `json:"id"`
-	}
-)
-
 // Create creates a device group in the LibreNMS API.
 //
 // Documentation: https://docs.librenms.org/API/DeviceGroups/#add_devicegroup
-func (d *DeviceGroupAPI) Create(group *DeviceGroupCreateRequest) (*DeviceGroupCreateResponse, error) {
+func (d *DeviceGroupAPI) Create(group *types.DeviceGroupCreateRequest) (*types.DeviceGroupCreateResponse, error) {
 	c := d.client
 	req, err := c.newRequest(http.MethodPost, deviceGroupEndpoint, group, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	resp := new(DeviceGroupCreateResponse)
+	resp := new(types.DeviceGroupCreateResponse)
 	return resp, c.do(req, resp)
 }
 
 // Delete deletes a group by its ID or hostname from the LibreNMS API.
 //
 // Documentation: https://docs.librenms.org/API/DeviceGroups/#delete_devicegroup
-func (d *DeviceGroupAPI) Delete(identifier string) (*BaseResponse, error) {
+func (d *DeviceGroupAPI) Delete(identifier string) (*types.BaseResponse, error) {
 	c := d.client
 	uri, err := url.Parse(fmt.Sprintf("%s/%s", deviceGroupEndpoint, identifier))
 	if err != nil {
@@ -126,21 +42,21 @@ func (d *DeviceGroupAPI) Delete(identifier string) (*BaseResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	resp := new(BaseResponse)
+	resp := new(types.BaseResponse)
 	return resp, c.do(req, resp)
 }
 
 // Get uses the same endpoint as GetDeviceGroups, but it returns a
 // modified payload with the single host (if a match is found).
 // This is primarily a convenience function for the Terraform provider.
-func (d *DeviceGroupAPI) Get(identifier string) (*DeviceGroupResponse, error) {
+func (d *DeviceGroupAPI) Get(identifier string) (*types.DeviceGroupResponse, error) {
 	c := d.client
 	req, err := c.newRequest(http.MethodGet, deviceGroupEndpoint, nil, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	resp := new(DeviceGroupResponse)
+	resp := new(types.DeviceGroupResponse)
 	if err = c.do(req, resp); err != nil {
 		return resp, err
 	}
@@ -149,8 +65,8 @@ func (d *DeviceGroupAPI) Get(identifier string) (*DeviceGroupResponse, error) {
 		return resp, nil
 	}
 
-	singleGroupResp := &DeviceGroupResponse{
-		Groups: make([]DeviceGroup, 0),
+	singleGroupResp := &types.DeviceGroupResponse{
+		Groups: make([]types.DeviceGroup, 0),
 	}
 	singleGroupResp.Message = resp.Message
 	singleGroupResp.Status = resp.Status
@@ -169,14 +85,14 @@ func (d *DeviceGroupAPI) Get(identifier string) (*DeviceGroupResponse, error) {
 // List retrieves a list of device groups from the LibreNMS API.
 //
 // Documentation: https://docs.librenms.org/API/DeviceGroups/#get_devicegroups
-func (d *DeviceGroupAPI) List() (*DeviceGroupResponse, error) {
+func (d *DeviceGroupAPI) List() (*types.DeviceGroupResponse, error) {
 	c := d.client
 	req, err := c.newRequest(http.MethodGet, deviceGroupEndpoint, nil, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	resp := new(DeviceGroupResponse)
+	resp := new(types.DeviceGroupResponse)
 	return resp, c.do(req, resp)
 }
 
@@ -184,14 +100,14 @@ func (d *DeviceGroupAPI) List() (*DeviceGroupResponse, error) {
 // The identifier can be either the group ID or the group name.
 //
 // Documentation: https://docs.librenms.org/API/DeviceGroups/#get_devices_by_group
-func (d *DeviceGroupAPI) GetMembers(identifier string) (*DeviceGroupMembersResponse, error) {
+func (d *DeviceGroupAPI) GetMembers(identifier string) (*types.DeviceGroupMembersResponse, error) {
 	c := d.client
 	req, err := c.newRequest(http.MethodGet, fmt.Sprintf("%s/%s", deviceGroupEndpoint, identifier), nil, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	resp := new(DeviceGroupMembersResponse)
+	resp := new(types.DeviceGroupMembersResponse)
 	return resp, c.do(req, resp)
 }
 
@@ -199,7 +115,7 @@ func (d *DeviceGroupAPI) GetMembers(identifier string) (*DeviceGroupMembersRespo
 //
 // The documentation states it uses name rather than ID to reference the group, but both seem to work (as of v25.5).
 // Documentation: https://docs.librenms.org/API/DeviceGroups/#update_devicegroup
-func (d *DeviceGroupAPI) Update(identifier string, payload *DeviceGroupUpdateRequest) (*BaseResponse, error) {
+func (d *DeviceGroupAPI) Update(identifier string, payload *types.DeviceGroupUpdateRequest) (*types.BaseResponse, error) {
 	c := d.client
 	uri, err := url.Parse(fmt.Sprintf("%s/%s", deviceGroupEndpoint, identifier))
 	if err != nil {
@@ -211,25 +127,6 @@ func (d *DeviceGroupAPI) Update(identifier string, payload *DeviceGroupUpdateReq
 		return nil, err
 	}
 
-	resp := new(BaseResponse)
+	resp := new(types.BaseResponse)
 	return resp, c.do(req, resp)
-}
-
-// JSON is a helper function that serializes the DeviceGroupRuleContainer to JSON format.
-func (g *DeviceGroupRuleContainer) JSON() (string, error) {
-	data, err := json.Marshal(g)
-	if err != nil {
-		return "", err
-	}
-	return string(data), nil
-}
-
-// MustJSON is a helper function that serializes the DeviceGroupRuleContainer to JSON format.
-// It returns an empty string if the marshalling fails.
-func (g *DeviceGroupRuleContainer) MustJSON() string {
-	data, err := json.Marshal(g)
-	if err != nil {
-		return ""
-	}
-	return string(data)
 }

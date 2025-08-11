@@ -12,8 +12,10 @@ func main() {
 	// Create a new LibreNMS client
 	// Using the new NewClient function
 	client, err := librenms.NewClient(
-		"http://localhost:8000",
-		"AUTH_TOKEN",
+		// "http://localhost:8000",
+		// "AUTH_TOKEN",
+		"http://192.168.8.2:8000",
+		"1e6b20eb95b1379f1343fa6d05f420dc",
 		librenms.WithLogLevel(slog.LevelDebug),
 	)
 	if err != nil {

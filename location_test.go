@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/javen-yan/librenms-go"
+	"github.com/javen-yan/librenms-go/types"
 
 	"github.com/stretchr/testify/require"
 )
@@ -51,8 +51,8 @@ func TestClient_GetLocation(t *testing.T) {
 
 	r.Equal(1, locationResp.Location.ID, "Expected location ID 1")
 	r.Equal("test location", locationResp.Location.Name, "Expected Location name 'test location'")
-	r.Equal(librenms.Bool(true), locationResp.Location.FixedCoordinates, "Expected FixedCoordinates to be true")
-	r.Equal(librenms.Float64(37.4220648), locationResp.Location.Longitude, "Expected Longitude to be 37.4220648")
+	r.Equal(types.Bool(true), locationResp.Location.FixedCoordinates, "Expected FixedCoordinates to be true")
+	r.Equal(types.Float64(37.4220648), locationResp.Location.Longitude, "Expected Longitude to be 37.4220648")
 }
 
 func TestClient_GetLocations(t *testing.T) {
@@ -72,13 +72,13 @@ func TestClient_GetLocations(t *testing.T) {
 	location := locationResp.Locations[0]
 	r.Equal(1, location.ID, "Expected Location ID 1")
 	r.Equal("Sitting on the Dock of the Bay", location.Name, "Expected Location name 'Sitting on the Dock of the Bay'")
-	r.Equal(librenms.Bool(false), location.FixedCoordinates, "Expected FixedCoordinates to be false")
+	r.Equal(types.Bool(false), location.FixedCoordinates, "Expected FixedCoordinates to be false")
 
 	location = locationResp.Locations[4]
 	r.Equal(5, location.ID, "Expected Location ID 5")
 	r.Equal("test location", location.Name, "Expected Location name 'test location'")
-	r.Equal(librenms.Bool(true), location.FixedCoordinates, "Expected FixedCoordinates to be true")
-	r.Equal(librenms.Float64(37.42206480), location.Longitude, "Expected Longitude to be 37.4220648")
+	r.Equal(types.Bool(true), location.FixedCoordinates, "Expected FixedCoordinates to be true")
+	r.Equal(types.Float64(37.42206480), location.Longitude, "Expected Longitude to be 37.4220648")
 }
 
 func TestClient_CreateLocation(t *testing.T) {
@@ -86,7 +86,7 @@ func TestClient_CreateLocation(t *testing.T) {
 
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
-	newLocationRequest := librenms.LocationCreateRequest{
+	newLocationRequest := types.LocationCreateRequest{
 		Name:             "Test Location",
 		FixedCoordinates: false,
 		Latitude:         37.7749,
@@ -121,7 +121,7 @@ func TestClient_UpdateLocation(t *testing.T) {
 
 	updateResp, err := testAPIClient.Location.Update(
 		testLocationID,
-		librenms.NewLocationUpdateRequest().SetName("Updated Test Location"),
+		types.NewLocationUpdateRequest().SetName("Updated Test Location"),
 	)
 
 	r.NoError(err, "UpdateLocation returned an error")

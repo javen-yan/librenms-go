@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/javen-yan/librenms-go"
+	"github.com/javen-yan/librenms-go/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -50,7 +50,7 @@ func TestSystemInfo_StructFields(t *testing.T) {
 	r := require.New(t)
 
 	// Test that SystemInfo struct can be properly marshaled/unmarshaled
-	systemInfo := librenms.SystemInfo{
+	systemInfo := types.SystemInfo{
 		LocalVer:    "1.0.0",
 		LocalSha:    "test123",
 		LocalDate:   "2023-01-01",
@@ -79,13 +79,13 @@ func TestSystemResponse_StructFields(t *testing.T) {
 	r := require.New(t)
 
 	// Test that SystemResponse struct can be properly initialized
-	systemResp := &librenms.SystemResponse{
-		BaseResponse: librenms.BaseResponse{
+	systemResp := &types.SystemResponse{
+		BaseResponse: types.BaseResponse{
 			Status:  "ok",
 			Message: "Success",
 			Count:   1,
 		},
-		System: []librenms.SystemInfo{
+		System: []types.SystemInfo{
 			{
 				LocalVer: "1.0.0",
 				LocalSha: "test123",

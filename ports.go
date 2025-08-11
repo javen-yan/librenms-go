@@ -4,155 +4,12 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+
+	"github.com/javen-yan/librenms-go/types"
 )
 
 const (
 	portsEndpoint = "ports"
-)
-
-type (
-	Port struct {
-		PortID                  string  `json:"port_id"`
-		DeviceID                string  `json:"device_id"`
-		PortDescrType           *string `json:"port_descr_type"`
-		PortDescrDescr          *string `json:"port_descr_descr"`
-		PortDescrCircuit        *string `json:"port_descr_circuit"`
-		PortDescrSpeed          *string `json:"port_descr_speed"`
-		PortDescrNotes          *string `json:"port_descr_notes"`
-		IfDescr                 string  `json:"ifDescr"`
-		IfName                  string  `json:"ifName"`
-		PortName                *string `json:"portName"`
-		IfIndex                 string  `json:"ifIndex"`
-		IfSpeed                 string  `json:"ifSpeed"`
-		IfConnectorPresent      string  `json:"ifConnectorPresent"`
-		IfPromiscuousMode       string  `json:"ifPromiscuousMode"`
-		IfHighSpeed             string  `json:"ifHighSpeed"`
-		IfOperStatus            string  `json:"ifOperStatus"`
-		IfOperStatusPrev        *string `json:"ifOperStatus_prev"`
-		IfAdminStatus           string  `json:"ifAdminStatus"`
-		IfAdminStatusPrev       *string `json:"ifAdminStatus_prev"`
-		IfDuplex                string  `json:"ifDuplex"`
-		IfMtu                   string  `json:"ifMtu"`
-		IfType                  string  `json:"ifType"`
-		IfAlias                 string  `json:"ifAlias"`
-		IfPhysAddress           string  `json:"ifPhysAddress"`
-		IfHardType              *string `json:"ifHardType"`
-		IfLastChange            string  `json:"ifLastChange"`
-		IfVlan                  string  `json:"ifVlan"`
-		IfTrunk                 string  `json:"ifTrunk"`
-		IfVrf                   string  `json:"ifVrf"`
-		CounterIn               *string `json:"counter_in"`
-		CounterOut              *string `json:"counter_out"`
-		Ignore                  string  `json:"ignore"`
-		Disabled                string  `json:"disabled"`
-		Detailed                string  `json:"detailed"`
-		Deleted                 string  `json:"deleted"`
-		PagpOperationMode       *string `json:"pagpOperationMode"`
-		PagpPortState           *string `json:"pagpPortState"`
-		PagpPartnerDeviceId     *string `json:"pagpPartnerDeviceId"`
-		PagpPartnerLearnMethod  *string `json:"pagpPartnerLearnMethod"`
-		PagpPartnerIfIndex      *string `json:"pagpPartnerIfIndex"`
-		PagpPartnerGroupIfIndex *string `json:"pagpPartnerGroupIfIndex"`
-		PagpPartnerDeviceName   *string `json:"pagpPartnerDeviceName"`
-		PagpEthcOperationMode   *string `json:"pagpEthcOperationMode"`
-		PagpDeviceId            *string `json:"pagpDeviceId"`
-		PagpGroupIfIndex        *string `json:"pagpGroupIfIndex"`
-		IfInUcastPkts           string  `json:"ifInUcastPkts"`
-		IfInUcastPktsPrev       string  `json:"ifInUcastPkts_prev"`
-		IfInUcastPktsDelta      string  `json:"ifInUcastPkts_delta"`
-		IfInUcastPktsRate       string  `json:"ifInUcastPkts_rate"`
-		IfOutUcastPkts          string  `json:"ifOutUcastPkts"`
-		IfOutUcastPktsPrev      string  `json:"ifOutUcastPkts_prev"`
-		IfOutUcastPktsDelta     string  `json:"ifOutUcastPkts_delta"`
-		IfOutUcastPktsRate      string  `json:"ifOutUcastPkts_rate"`
-		IfInErrors              string  `json:"ifInErrors"`
-		IfInErrorsPrev          string  `json:"ifInErrors_prev"`
-		IfInErrorsDelta         string  `json:"ifInErrors_delta"`
-		IfInErrorsRate          string  `json:"ifInErrors_rate"`
-		IfOutErrors             string  `json:"ifOutErrors"`
-		IfOutErrorsPrev         string  `json:"ifOutErrors_prev"`
-		IfOutErrorsDelta        string  `json:"ifOutErrors_delta"`
-		IfOutErrorsRate         string  `json:"ifOutErrors_rate"`
-		IfInOctets              string  `json:"ifInOctets"`
-		IfInOctetsPrev          string  `json:"ifInOctets_prev"`
-		IfInOctetsDelta         string  `json:"ifInOctets_delta"`
-		IfInOctetsRate          string  `json:"ifInOctets_rate"`
-		IfOutOctets             string  `json:"ifOutOctets"`
-		IfOutOctetsPrev         string  `json:"ifOutOctets_prev"`
-		IfOutOctetsDelta        string  `json:"ifOutOctets_delta"`
-		IfOutOctetsRate         string  `json:"ifOutOctets_rate"`
-		PollTime                string  `json:"poll_time"`
-		PollPrev                string  `json:"poll_prev"`
-		PollPeriod              string  `json:"poll_period"`
-	}
-
-	PortIPAddress struct {
-		IPv4AddressID string `json:"ipv4_address_id"`
-		IPv4Address   string `json:"ipv4_address"`
-		IPv4PrefixLen string `json:"ipv4_prefixlen"`
-		IPv4NetworkID string `json:"ipv4_network_id"`
-		PortID        string `json:"port_id"`
-		ContextName   string `json:"context_name"`
-	}
-
-	PortTransceiver struct {
-		ID         int     `json:"id"`
-		CreatedAt  string  `json:"created_at"`
-		UpdatedAt  string  `json:"updated_at"`
-		DeviceID   int     `json:"device_id"`
-		PortID     int     `json:"port_id"`
-		Index      string  `json:"index"`
-		Type       string  `json:"type"`
-		Vendor     string  `json:"vendor"`
-		OUI        string  `json:"oui"`
-		Model      *string `json:"model"`
-		Revision   string  `json:"revision"`
-		Serial     string  `json:"serial"`
-		Date       *string `json:"date"`
-		DDM        bool    `json:"ddm"`
-		Encoding   *string `json:"encoding"`
-		Cable      string  `json:"cable"`
-		Distance   int     `json:"distance"`
-		Wavelength int     `json:"wavelength"`
-		Connector  string  `json:"connector"`
-		Channels   int     `json:"channels"`
-	}
-
-	PortDescriptionUpdateRequest struct {
-		Description string `json:"description"`
-	}
-
-	// API响应结构 - 根据文档更新
-	PortsResponse struct {
-		BaseResponse
-		Ports []Port `json:"ports"`
-	}
-
-	PortResponse struct {
-		BaseResponse
-		Port []Port `json:"port"`
-	}
-
-	PortIPResponse struct {
-		BaseResponse
-		Addresses []PortIPAddress `json:"addresses"`
-	}
-
-	PortTransceiverResponse struct {
-		BaseResponse
-		Transceivers []PortTransceiver `json:"transceivers"`
-	}
-
-	PortDescriptionResponse struct {
-		BaseResponse
-		PortDescription string `json:"port_description"`
-	}
-
-	// 查询参数结构
-	PortsQueryParams struct {
-		Columns *string `url:"columns,omitempty"`
-		Filter  *string `url:"filter,omitempty"`
-	}
 )
 
 // GetAllPorts retrieves all ports on all devices
@@ -160,7 +17,7 @@ type (
 //
 // Documentation: https://docs.librenms.org/API/Ports/#get_all_ports
 // Route: /api/v0/ports
-func (p *PortAPI) GetAllPorts(params *PortsQueryParams) (*PortsResponse, error) {
+func (p *PortAPI) GetAllPorts(params *types.PortsQueryParams) (*types.PortsResponse, error) {
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
@@ -172,7 +29,7 @@ func (p *PortAPI) GetAllPorts(params *PortsQueryParams) (*PortsResponse, error) 
 		}
 	}
 
-	var resp PortsResponse
+	var resp types.PortsResponse
 	httpReq, err := p.client.newRequest(http.MethodGet, portsEndpoint, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -186,7 +43,7 @@ func (p *PortAPI) GetAllPorts(params *PortsQueryParams) (*PortsResponse, error) 
 //
 // Documentation: https://docs.librenms.org/API/Ports/#search_ports
 // Route: /api/v0/ports/search/:search
-func (p *PortAPI) SearchPorts(search string, params *PortsQueryParams) (*PortsResponse, error) {
+func (p *PortAPI) SearchPorts(search string, params *types.PortsQueryParams) (*types.PortsResponse, error) {
 	path := fmt.Sprintf("%s/search/%s", portsEndpoint, search)
 
 	var queryParams *url.Values
@@ -200,7 +57,7 @@ func (p *PortAPI) SearchPorts(search string, params *PortsQueryParams) (*PortsRe
 		}
 	}
 
-	var resp PortsResponse
+	var resp types.PortsResponse
 	httpReq, err := p.client.newRequest(http.MethodGet, path, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -214,7 +71,7 @@ func (p *PortAPI) SearchPorts(search string, params *PortsQueryParams) (*PortsRe
 //
 // Documentation: https://docs.librenms.org/API/Ports/#search_ports_in_specific_fields
 // Route: /api/v0/ports/search/:field/:search
-func (p *PortAPI) SearchPortsInField(field, search string, params *PortsQueryParams) (*PortsResponse, error) {
+func (p *PortAPI) SearchPortsInField(field, search string, params *types.PortsQueryParams) (*types.PortsResponse, error) {
 	path := fmt.Sprintf("%s/search/%s/%s", portsEndpoint, field, search)
 
 	var queryParams *url.Values
@@ -228,7 +85,7 @@ func (p *PortAPI) SearchPortsInField(field, search string, params *PortsQueryPar
 		}
 	}
 
-	var resp PortsResponse
+	var resp types.PortsResponse
 	httpReq, err := p.client.newRequest(http.MethodGet, path, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -242,7 +99,7 @@ func (p *PortAPI) SearchPortsInField(field, search string, params *PortsQueryPar
 //
 // Documentation: https://docs.librenms.org/API/Ports/#ports_with_associated_mac
 // Route: /api/v0/ports/mac/:search
-func (p *PortAPI) GetPortsWithMAC(mac string, params *PortsQueryParams) (*PortResponse, error) {
+func (p *PortAPI) GetPortsWithMAC(mac string, params *types.PortsQueryParams) (*types.PortResponse, error) {
 	path := fmt.Sprintf("%s/mac/%s", portsEndpoint, mac)
 
 	var queryParams *url.Values
@@ -256,7 +113,7 @@ func (p *PortAPI) GetPortsWithMAC(mac string, params *PortsQueryParams) (*PortRe
 		}
 	}
 
-	var resp PortResponse
+	var resp types.PortResponse
 	httpReq, err := p.client.newRequest(http.MethodGet, path, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -270,7 +127,7 @@ func (p *PortAPI) GetPortsWithMAC(mac string, params *PortsQueryParams) (*PortRe
 //
 // Documentation: https://docs.librenms.org/API/Ports/#get_port_info
 // Route: /api/v0/ports/:portid
-func (p *PortAPI) GetPortInfo(portID int, with ...string) (*PortResponse, error) {
+func (p *PortAPI) GetPortInfo(portID int, with ...string) (*types.PortResponse, error) {
 	path := fmt.Sprintf("%s/%d", portsEndpoint, portID)
 
 	// 处理with参数
@@ -281,7 +138,7 @@ func (p *PortAPI) GetPortInfo(portID int, with ...string) (*PortResponse, error)
 		queryParams = &params
 	}
 
-	var resp PortResponse
+	var resp types.PortResponse
 	httpReq, err := p.client.newRequest(http.MethodGet, path, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -295,9 +152,9 @@ func (p *PortAPI) GetPortInfo(portID int, with ...string) (*PortResponse, error)
 //
 // Documentation: https://docs.librenms.org/API/Ports/#get_port_ip_info
 // Route: /api/v0/ports/:portid/ip
-func (p *PortAPI) GetPortIPInfo(portID int) (*PortIPResponse, error) {
+func (p *PortAPI) GetPortIPInfo(portID int) (*types.PortIPResponse, error) {
 	path := fmt.Sprintf("%s/%d/ip", portsEndpoint, portID)
-	var resp PortIPResponse
+	var resp types.PortIPResponse
 	httpReq, err := p.client.newRequest(http.MethodGet, path, nil, nil)
 	if err != nil {
 		return nil, err
@@ -311,9 +168,9 @@ func (p *PortAPI) GetPortIPInfo(portID int) (*PortIPResponse, error) {
 //
 // Documentation: https://docs.librenms.org/API/Ports/#get_port_transceiver
 // Route: /api/v0/ports/:portid/transceiver
-func (p *PortAPI) GetPortTransceiver(portID int) (*PortTransceiverResponse, error) {
+func (p *PortAPI) GetPortTransceiver(portID int) (*types.PortTransceiverResponse, error) {
 	path := fmt.Sprintf("%s/%d/transceiver", portsEndpoint, portID)
-	var resp PortTransceiverResponse
+	var resp types.PortTransceiverResponse
 	httpReq, err := p.client.newRequest(http.MethodGet, path, nil, nil)
 	if err != nil {
 		return nil, err
@@ -326,9 +183,9 @@ func (p *PortAPI) GetPortTransceiver(portID int) (*PortTransceiverResponse, erro
 //
 // Documentation: https://docs.librenms.org/API/Ports/#get_port_description
 // Route: /api/v0/ports/:portid/description
-func (p *PortAPI) GetPortDescription(portID int) (*PortDescriptionResponse, error) {
+func (p *PortAPI) GetPortDescription(portID int) (*types.PortDescriptionResponse, error) {
 	path := fmt.Sprintf("%s/%d/description", portsEndpoint, portID)
-	var resp PortDescriptionResponse
+	var resp types.PortDescriptionResponse
 	httpReq, err := p.client.newRequest(http.MethodGet, path, nil, nil)
 	if err != nil {
 		return nil, err
@@ -342,11 +199,11 @@ func (p *PortAPI) GetPortDescription(portID int) (*PortDescriptionResponse, erro
 //
 // Documentation: https://docs.librenms.org/API/Ports/#update_port_description
 // Route: /api/v0/ports/:portid/description
-func (p *PortAPI) UpdatePortDescription(portID int, description string) (*PortDescriptionResponse, error) {
+func (p *PortAPI) UpdatePortDescription(portID int, description string) (*types.PortDescriptionResponse, error) {
 	path := fmt.Sprintf("%s/%d/description", portsEndpoint, portID)
-	req := &PortDescriptionUpdateRequest{Description: description}
+	req := &types.PortDescriptionUpdateRequest{Description: description}
 
-	var resp PortDescriptionResponse
+	var resp types.PortDescriptionResponse
 	httpReq, err := p.client.newRequest(http.MethodPatch, path, req, nil)
 	if err != nil {
 		return nil, err

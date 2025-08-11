@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+
+	"github.com/javen-yan/librenms-go/types"
 )
 
 const (
@@ -13,114 +15,11 @@ const (
 	nacEndpoint   = "resources/nac"
 )
 
-type (
-	VLAN struct {
-		VLANID     string `json:"vlan_id"`
-		DeviceID   string `json:"device_id"`
-		VLANVLAN   string `json:"vlan_vlan"`
-		VLANDomain string `json:"vlan_domain"`
-		VLANName   string `json:"vlan_name"`
-		VLANType   string `json:"vlan_type"`
-		VLANState  int    `json:"vlan_state"`
-	}
-
-	Link struct {
-		ID                int     `json:"id"`
-		LocalPortID       int     `json:"local_port_id"`
-		LocalDeviceID     int     `json:"local_device_id"`
-		RemotePortID      int     `json:"remote_port_id"`
-		Active            int     `json:"active"`
-		Protocol          string  `json:"protocol"`
-		RemoteHostname    string  `json:"remote_hostname"`
-		RemoteDeviceID    int     `json:"remote_device_id"`
-		RemotePort        string  `json:"remote_port"`
-		RemotePlatform    *string `json:"remote_platform"`
-		RemoteVersion     string  `json:"remote_version"`
-	}
-
-	PortFDB struct {
-		PortsFDBID int    `json:"ports_fdb_id"`
-		PortID     int    `json:"port_id"`
-		MACAddress string `json:"mac_address"`
-		VLANID     int    `json:"vlan_id"`
-		DeviceID   int    `json:"device_id"`
-		CreatedAt  string `json:"created_at"`
-		UpdatedAt  string `json:"updated_at"`
-	}
-
-	PortFDBDetail struct {
-		Hostname  string `json:"hostname"`
-		SysName   string `json:"sysName"`
-		IfName    string `json:"ifName"`
-		IfAlias   string `json:"ifAlias"`
-		IfDescr   string `json:"ifDescr"`
-		LastSeen  string `json:"last_seen"`
-		UpdatedAt string `json:"updated_at"`
-	}
-
-	PortNAC struct {
-		PortsNACID      string  `json:"ports_nac_id"`
-		AuthID          string  `json:"auth_id"`
-		DeviceID        int     `json:"device_id"`
-		PortID          int     `json:"port_id"`
-		Domain          string  `json:"domain"`
-		Username        string  `json:"username"`
-		MACAddress      string  `json:"mac_address"`
-		IPAddress       string  `json:"ip_address"`
-		HostMode        string  `json:"host_mode"`
-		AuthzStatus     string  `json:"authz_status"`
-		AuthzBy         string  `json:"authz_by"`
-		AuthcStatus     string  `json:"authc_status"`
-		Method          string  `json:"method"`
-		Timeout         string  `json:"timeout"`
-		TimeLeft        string  `json:"time_left"`
-		VLAN            int     `json:"vlan"`
-		TimeElapsed     *string `json:"time_elapsed"`
-		CreatedAt       string  `json:"created_at"`
-		UpdatedAt       string  `json:"updated_at"`
-		Historical      int     `json:"historical"`
-	}
-
-	// API响应结构
-	VLANsResponse struct {
-		BaseResponse
-		VLANs []VLAN `json:"vlans"`
-	}
-
-	LinksResponse struct {
-		BaseResponse
-		Links []Link `json:"links"`
-	}
-
-	PortFDBResponse struct {
-		BaseResponse
-		PortsFDB []PortFDB `json:"ports_fdb"`
-	}
-
-	PortFDBDetailResponse struct {
-		BaseResponse
-		MAC     string           `json:"mac"`
-		MACOUI  string           `json:"mac_oui"`
-		PortsFDB []PortFDBDetail `json:"ports_fdb"`
-	}
-
-	PortNACResponse struct {
-		BaseResponse
-		PortsNAC []PortNAC `json:"ports_nac"`
-	}
-
-	// 查询参数结构
-	SwitchingQueryParams struct {
-		Columns *string `url:"columns,omitempty"`
-		Filter  *string `url:"filter,omitempty"`
-	}
-)
-
 // GetAllVLANs retrieves a list of all VLANs
 //
 // Documentation: https://docs.librenms.org/API/Switching/#list_vlans
 // Route: /api/v0/resources/vlans
-func (s *SwitchingAPI) GetAllVLANs(params *SwitchingQueryParams) (*VLANsResponse, error) {
+func (s *SwitchingAPI) GetAllVLANs(params *types.SwitchingQueryParams) (*types.VLANsResponse, error) {
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
@@ -135,7 +34,7 @@ func (s *SwitchingAPI) GetAllVLANs(params *SwitchingQueryParams) (*VLANsResponse
 		}
 	}
 
-	var resp VLANsResponse
+	var resp types.VLANsResponse
 	httpReq, err := s.client.newRequest(http.MethodGet, vlansEndpoint, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -149,7 +48,7 @@ func (s *SwitchingAPI) GetAllVLANs(params *SwitchingQueryParams) (*VLANsResponse
 //
 // Documentation: https://docs.librenms.org/API/Switching/#get_vlans
 // Route: /api/v0/devices/:hostname/vlans
-func (s *SwitchingAPI) GetDeviceVLANs(hostname string, params *SwitchingQueryParams) (*VLANsResponse, error) {
+func (s *SwitchingAPI) GetDeviceVLANs(hostname string, params *types.SwitchingQueryParams) (*types.VLANsResponse, error) {
 	path := fmt.Sprintf("devices/%s/vlans", hostname)
 
 	var queryParams *url.Values
@@ -166,7 +65,7 @@ func (s *SwitchingAPI) GetDeviceVLANs(hostname string, params *SwitchingQueryPar
 		}
 	}
 
-	var resp VLANsResponse
+	var resp types.VLANsResponse
 	httpReq, err := s.client.newRequest(http.MethodGet, path, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -179,7 +78,7 @@ func (s *SwitchingAPI) GetDeviceVLANs(hostname string, params *SwitchingQueryPar
 //
 // Documentation: https://docs.librenms.org/API/Switching/#list_links
 // Route: /api/v0/resources/links
-func (s *SwitchingAPI) GetAllLinks(params *SwitchingQueryParams) (*LinksResponse, error) {
+func (s *SwitchingAPI) GetAllLinks(params *types.SwitchingQueryParams) (*types.LinksResponse, error) {
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
@@ -194,7 +93,7 @@ func (s *SwitchingAPI) GetAllLinks(params *SwitchingQueryParams) (*LinksResponse
 		}
 	}
 
-	var resp LinksResponse
+	var resp types.LinksResponse
 	httpReq, err := s.client.newRequest(http.MethodGet, linksEndpoint, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -208,7 +107,7 @@ func (s *SwitchingAPI) GetAllLinks(params *SwitchingQueryParams) (*LinksResponse
 //
 // Documentation: https://docs.librenms.org/API/Switching/#get_links
 // Route: /api/v0/devices/:hostname/links
-func (s *SwitchingAPI) GetDeviceLinks(hostname string, params *SwitchingQueryParams) (*LinksResponse, error) {
+func (s *SwitchingAPI) GetDeviceLinks(hostname string, params *types.SwitchingQueryParams) (*types.LinksResponse, error) {
 	path := fmt.Sprintf("devices/%s/links", hostname)
 
 	var queryParams *url.Values
@@ -225,7 +124,7 @@ func (s *SwitchingAPI) GetDeviceLinks(hostname string, params *SwitchingQueryPar
 		}
 	}
 
-	var resp LinksResponse
+	var resp types.LinksResponse
 	httpReq, err := s.client.newRequest(http.MethodGet, path, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -238,7 +137,7 @@ func (s *SwitchingAPI) GetDeviceLinks(hostname string, params *SwitchingQueryPar
 //
 // Documentation: https://docs.librenms.org/API/Switching/#get_link
 // Route: /api/v0/resources/links/:id
-func (s *SwitchingAPI) GetLink(linkID int, params *SwitchingQueryParams) (*LinksResponse, error) {
+func (s *SwitchingAPI) GetLink(linkID int, params *types.SwitchingQueryParams) (*types.LinksResponse, error) {
 	path := fmt.Sprintf("%s/%d", linksEndpoint, linkID)
 
 	var queryParams *url.Values
@@ -255,7 +154,7 @@ func (s *SwitchingAPI) GetLink(linkID int, params *SwitchingQueryParams) (*Links
 		}
 	}
 
-	var resp LinksResponse
+	var resp types.LinksResponse
 	httpReq, err := s.client.newRequest(http.MethodGet, path, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -269,7 +168,7 @@ func (s *SwitchingAPI) GetLink(linkID int, params *SwitchingQueryParams) (*Links
 //
 // Documentation: https://docs.librenms.org/API/Switching/#list_fdb
 // Route: /api/v0/resources/fdb/:mac
-func (s *SwitchingAPI) GetPortFDB(mac string, params *SwitchingQueryParams) (*PortFDBResponse, error) {
+func (s *SwitchingAPI) GetPortFDB(mac string, params *types.SwitchingQueryParams) (*types.PortFDBResponse, error) {
 	path := fdbEndpoint
 	if mac != "" {
 		path = fmt.Sprintf("%s/%s", fdbEndpoint, mac)
@@ -289,7 +188,7 @@ func (s *SwitchingAPI) GetPortFDB(mac string, params *SwitchingQueryParams) (*Po
 		}
 	}
 
-	var resp PortFDBResponse
+	var resp types.PortFDBResponse
 	httpReq, err := s.client.newRequest(http.MethodGet, path, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -303,7 +202,7 @@ func (s *SwitchingAPI) GetPortFDB(mac string, params *SwitchingQueryParams) (*Po
 //
 // Documentation: https://docs.librenms.org/API/Switching/#list_fdb_detail
 // Route: /api/v0/resources/fdb/:mac/detail
-func (s *SwitchingAPI) GetPortFDBDetail(mac string, params *SwitchingQueryParams) (*PortFDBDetailResponse, error) {
+func (s *SwitchingAPI) GetPortFDBDetail(mac string, params *types.SwitchingQueryParams) (*types.PortFDBDetailResponse, error) {
 	path := fmt.Sprintf("%s/%s/detail", fdbEndpoint, mac)
 
 	var queryParams *url.Values
@@ -320,7 +219,7 @@ func (s *SwitchingAPI) GetPortFDBDetail(mac string, params *SwitchingQueryParams
 		}
 	}
 
-	var resp PortFDBDetailResponse
+	var resp types.PortFDBDetailResponse
 	httpReq, err := s.client.newRequest(http.MethodGet, path, nil, queryParams)
 	if err != nil {
 		return nil, err
@@ -334,7 +233,7 @@ func (s *SwitchingAPI) GetPortFDBDetail(mac string, params *SwitchingQueryParams
 //
 // Documentation: https://docs.librenms.org/API/Switching/#list_nac
 // Route: /api/v0/resources/nac/:mac
-func (s *SwitchingAPI) GetPortNAC(mac string, params *SwitchingQueryParams) (*PortNACResponse, error) {
+func (s *SwitchingAPI) GetPortNAC(mac string, params *types.SwitchingQueryParams) (*types.PortNACResponse, error) {
 	path := nacEndpoint
 	if mac != "" {
 		path = fmt.Sprintf("%s/%s", nacEndpoint, mac)
@@ -354,7 +253,7 @@ func (s *SwitchingAPI) GetPortNAC(mac string, params *SwitchingQueryParams) (*Po
 		}
 	}
 
-	var resp PortNACResponse
+	var resp types.PortNACResponse
 	httpReq, err := s.client.newRequest(http.MethodGet, path, nil, queryParams)
 	if err != nil {
 		return nil, err

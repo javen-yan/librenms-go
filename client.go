@@ -31,6 +31,7 @@ type Client struct {
 	Inventory   *InventoryAPI
 	Routing     *RoutingAPI
 	Switching   *SwitchingAPI
+	Logs        *LogsAPI
 }
 
 // DeviceAPI provides device-related operations
@@ -166,6 +167,7 @@ func NewClient(baseURL, token string, opts ...Option) (*Client, error) {
 	c.Inventory = &InventoryAPI{client: c}
 	c.Routing = &RoutingAPI{client: c}
 	c.Switching = &SwitchingAPI{client: c}
+	c.Logs = &LogsAPI{client: c}
 
 	return c, nil
 }

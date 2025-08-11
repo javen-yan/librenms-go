@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/javen-yan/librenms-go"
+	"github.com/javen-yan/librenms-go/types"
 
 	"github.com/stretchr/testify/require"
 )
@@ -102,9 +102,9 @@ func TestClient_CreateDeviceGroup(t *testing.T) {
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
 	// Define the rules for the device group
-	rules := librenms.DeviceGroupRuleContainer{
+	rules := types.DeviceGroupRuleContainer{
 		Condition: "AND",
-		Rules: []librenms.DeviceGroupRule{
+		Rules: []types.DeviceGroupRule{
 			{
 				ID:       "devices.sysDescr",
 				Field:    "devices.sysDescr",
@@ -118,7 +118,7 @@ func TestClient_CreateDeviceGroup(t *testing.T) {
 		Valid: true,
 	}
 
-	newDeviceGroupRequest := librenms.DeviceGroupCreateRequest{
+	newDeviceGroupRequest := types.DeviceGroupCreateRequest{
 		Name:  "Test Group",
 		Rules: func() *string { s := rules.MustJSON(); return &s }(),
 		Type:  "dynamic",
@@ -139,12 +139,12 @@ func TestClient_CreateDeviceGroupNested(t *testing.T) {
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
 	// Define the rules for the device group. This definition makes no sense, but it doesn't matter.
-	rules := librenms.DeviceGroupRuleContainer{
+	rules := types.DeviceGroupRuleContainer{
 		Condition: "AND",
-		Rules: []librenms.DeviceGroupRule{
+		Rules: []types.DeviceGroupRule{
 			{
 				Condition: "AND",
-				Rules: []librenms.DeviceGroupRule{
+				Rules: []types.DeviceGroupRule{
 					{
 						ID:       "devices.sysDescr",
 						Field:    "devices.sysDescr",
@@ -173,7 +173,7 @@ func TestClient_CreateDeviceGroupNested(t *testing.T) {
 			},
 			{
 				Condition: "AND",
-				Rules: []librenms.DeviceGroupRule{
+				Rules: []types.DeviceGroupRule{
 					{
 						ID:       "devices.sysDescr",
 						Field:    "devices.sysDescr",
@@ -205,7 +205,7 @@ func TestClient_CreateDeviceGroupNested(t *testing.T) {
 		Valid: true,
 	}
 
-	newDeviceGroupRequest := librenms.DeviceGroupCreateRequest{
+	newDeviceGroupRequest := types.DeviceGroupCreateRequest{
 		Name:  "Test Group",
 		Rules: func() *string { s := rules.MustJSON(); return &s }(),
 		Type:  "dynamic",
@@ -225,7 +225,7 @@ func TestClient_CreateDeviceGroupStatic(t *testing.T) {
 
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
-	newDeviceGroupRequest := librenms.DeviceGroupCreateRequest{
+	newDeviceGroupRequest := types.DeviceGroupCreateRequest{
 		Name:    "Test Group",
 		Devices: []int{1, 2},
 		Type:    "static",
@@ -259,9 +259,9 @@ func TestClient_UpdateDeviceGroup(t *testing.T) {
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
 	// Define the rules for the device group
-	rules := librenms.DeviceGroupRuleContainer{
+	rules := types.DeviceGroupRuleContainer{
 		Condition: "AND",
-		Rules: []librenms.DeviceGroupRule{
+		Rules: []types.DeviceGroupRule{
 			{
 				ID:       "devices.sysDescr",
 				Field:    "devices.sysDescr",
@@ -275,7 +275,7 @@ func TestClient_UpdateDeviceGroup(t *testing.T) {
 		Valid: true,
 	}
 
-	deviceGroupRequest := librenms.DeviceGroupUpdateRequest{
+	deviceGroupRequest := types.DeviceGroupUpdateRequest{
 		Name:  "Test Group",
 		Rules: func() *string { s := rules.MustJSON(); return &s }(),
 		Type:  "Dynamic",

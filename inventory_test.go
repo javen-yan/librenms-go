@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/javen-yan/librenms-go"
+	"github.com/javen-yan/librenms-go/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -41,14 +41,14 @@ func TestClient_GetInventory(t *testing.T) {
 	r.Equal("FOC1234X0YX", item.EntPhysicalSerialNum, "Expected EntPhysicalSerialNum 'FOC1234X0YX'")
 	r.Equal("WS-C3560-24PS-S", item.EntPhysicalModelName, "Expected EntPhysicalModelName 'WS-C3560-24PS-S'")
 	r.Equal("Cisco Systems, Inc.", item.EntPhysicalMfgName, "Expected EntPhysicalMfgName 'Cisco Systems, Inc.'")
-	r.Equal(librenms.Bool(true), item.EntPhysicalIsFRU, "Expected EntPhysicalIsFRU true")
+	r.Equal(types.Bool(true), item.EntPhysicalIsFRU, "Expected EntPhysicalIsFRU true")
 	r.Equal("Core Switch", item.EntPhysicalAlias, "Expected EntPhysicalAlias 'Core Switch'")
 	r.Equal("ASSET001", item.EntPhysicalAssetID, "Expected EntPhysicalAssetID 'ASSET001'")
 	r.Equal("0", item.EntPhysicalContainedIn, "Expected EntPhysicalContainedIn 0")
 	r.Equal("-1", item.EntPhysicalParentRelPos, "Expected EntPhysicalParentRelPos -1")
 	r.Equal("2023-01-15", item.EntPhysicalMfgDate, "Expected EntPhysicalMfgDate '2023-01-15'")
 	r.Equal("http://www.cisco.com/go/c3560", item.EntPhysicalUris, "Expected EntPhysicalUris")
-	r.Equal(librenms.Bool(false), item.Deleted, "Expected Deleted false")
+	r.Equal(types.Bool(false), item.Deleted, "Expected Deleted false")
 }
 
 // This init function will register handlers for inventory-related API endpoints.
