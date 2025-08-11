@@ -1,0 +1,29 @@
+{
+  "status": "ok",
+  "message": "",
+  "count": 1,
+  "inventory": [
+    {
+      "entPhysical_id": "1",
+      "device_id": "1",
+      "entPhysicalIndex": "1",
+      "entPhysicalDescr": "Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(53)SEY4, RELEASE SOFTWARE (fc1)",
+      "entPhysicalClass": "chassis",
+      "entPhysicalName": "C3560-24PS-S",
+      "entPhysicalHardwareRev": "V02",
+      "entPhysicalFirmwareRev": "12.2(53)SEY4",
+      "entPhysicalSoftwareRev": "12.2(53)SEY4",
+      "entPhysicalSerialNum": "FOC1234X0YX",
+      "entPhysicalModelName": "WS-C3560-24PS-S",
+      "entPhysicalMfgName": "Cisco Systems, Inc.",
+      "entPhysicalIsFRU": 1,
+      "entPhysicalAlias": "Core Switch",
+      "entPhysicalAssetID": "ASSET001",
+      "entPhysicalContainedIn": "0",
+      "entPhysicalParentRelPos": "-1",
+      "entPhysicalMfgDate": "2023-01-15",
+      "entPhysicalUris": "http://www.cisco.com/go/c3560",
+      "deleted": 0
+    }
+  ]
+}

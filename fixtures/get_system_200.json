@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "message": "",
+  "count": 1,
+  "system": [
+    {
+      "local_ver": "23.11.0",
+      "local_sha": "abc123def456",
+      "local_date": "2023-11-15",
+      "local_branch": "master",
+      "db_schema": "2023_11_01_000000",
+      "php_ver": "8.1.0",
+      "python_ver": "3.9.0",
+      "database_ver": "10.5.0",
+      "rrdtool_ver": "1.7.2",
+      "netsnmp_ver": "5.9.1"
+    }
+  ]
+}
