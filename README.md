@@ -173,7 +173,6 @@ if err != nil {
 
 ```
 librenms-go/
-├── client.go              # 主要客户端实现
 ├── librenms.go            # 客户端工厂函数
 ├── errors.go              # 错误定义
 ├── logging.go             # 日志配置
