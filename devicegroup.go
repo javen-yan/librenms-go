@@ -98,10 +98,11 @@ type (
 	}
 )
 
-// CreateDeviceGroup creates a device group in the LibreNMS API.
+// Create creates a device group in the LibreNMS API.
 //
 // Documentation: https://docs.librenms.org/API/DeviceGroups/#add_devicegroup
-func (c *Client) CreateDeviceGroup(group *DeviceGroupCreateRequest) (*DeviceGroupCreateResponse, error) {
+func (d *DeviceGroupAPI) Create(group *DeviceGroupCreateRequest) (*DeviceGroupCreateResponse, error) {
+	c := d.client
 	req, err := c.newRequest(http.MethodPost, deviceGroupEndpoint, group, nil)
 	if err != nil {
 		return nil, err
@@ -111,10 +112,11 @@ func (c *Client) CreateDeviceGroup(group *DeviceGroupCreateRequest) (*DeviceGrou
 	return resp, c.do(req, resp)
 }
 
-// DeleteDeviceGroup deletes a group by its ID or hostname from the LibreNMS API.
+// Delete deletes a group by its ID or hostname from the LibreNMS API.
 //
 // Documentation: https://docs.librenms.org/API/DeviceGroups/#delete_devicegroup
-func (c *Client) DeleteDeviceGroup(identifier string) (*BaseResponse, error) {
+func (d *DeviceGroupAPI) Delete(identifier string) (*BaseResponse, error) {
+	c := d.client
 	uri, err := url.Parse(fmt.Sprintf("%s/%s", deviceGroupEndpoint, identifier))
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse URI: %w", err)
@@ -128,10 +130,11 @@ func (c *Client) DeleteDeviceGroup(identifier string) (*BaseResponse, error) {
 	return resp, c.do(req, resp)
 }
 
-// GetDeviceGroup uses the same endpoint as GetDeviceGroups, but it returns a
+// Get uses the same endpoint as GetDeviceGroups, but it returns a
 // modified payload with the single host (if a match is found).
 // This is primarily a convenience function for the Terraform provider.
-func (c *Client) GetDeviceGroup(identifier string) (*DeviceGroupResponse, error) {
+func (d *DeviceGroupAPI) Get(identifier string) (*DeviceGroupResponse, error) {
+	c := d.client
 	req, err := c.newRequest(http.MethodGet, deviceGroupEndpoint, nil, nil)
 	if err != nil {
 		return nil, err
@@ -163,10 +166,11 @@ func (c *Client) GetDeviceGroup(identifier string) (*DeviceGroupResponse, error)
 	return singleGroupResp, err
 }
 
-// GetDeviceGroups retrieves a list of device groups from the LibreNMS API.
+// List retrieves a list of device groups from the LibreNMS API.
 //
 // Documentation: https://docs.librenms.org/API/DeviceGroups/#get_devicegroups
-func (c *Client) GetDeviceGroups() (*DeviceGroupResponse, error) {
+func (d *DeviceGroupAPI) List() (*DeviceGroupResponse, error) {
+	c := d.client
 	req, err := c.newRequest(http.MethodGet, deviceGroupEndpoint, nil, nil)
 	if err != nil {
 		return nil, err
@@ -176,11 +180,12 @@ func (c *Client) GetDeviceGroups() (*DeviceGroupResponse, error) {
 	return resp, c.do(req, resp)
 }
 
-// GetDeviceGroupMembers retrieves a list of device group members from the LibreNMS API.
+// GetMembers retrieves a list of device group members from the LibreNMS API.
 // The identifier can be either the group ID or the group name.
 //
 // Documentation: https://docs.librenms.org/API/DeviceGroups/#get_devices_by_group
-func (c *Client) GetDeviceGroupMembers(identifier string) (*DeviceGroupMembersResponse, error) {
+func (d *DeviceGroupAPI) GetMembers(identifier string) (*DeviceGroupMembersResponse, error) {
+	c := d.client
 	req, err := c.newRequest(http.MethodGet, fmt.Sprintf("%s/%s", deviceGroupEndpoint, identifier), nil, nil)
 	if err != nil {
 		return nil, err
@@ -190,11 +195,12 @@ func (c *Client) GetDeviceGroupMembers(identifier string) (*DeviceGroupMembersRe
 	return resp, c.do(req, resp)
 }
 
-// UpdateDeviceGroup updates an existing device group in the LibreNMS API.
+// Update updates an existing device group in the LibreNMS API.
 //
 // The documentation states it uses name rather than ID to reference the group, but both seem to work (as of v25.5).
 // Documentation: https://docs.librenms.org/API/DeviceGroups/#update_devicegroup
-func (c *Client) UpdateDeviceGroup(identifier string, payload *DeviceGroupUpdateRequest) (*BaseResponse, error) {
+func (d *DeviceGroupAPI) Update(identifier string, payload *DeviceGroupUpdateRequest) (*BaseResponse, error) {
+	c := d.client
 	uri, err := url.Parse(fmt.Sprintf("%s/%s", deviceGroupEndpoint, identifier))
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse URI: %w", err)

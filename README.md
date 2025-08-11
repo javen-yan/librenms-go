@@ -149,14 +149,17 @@ client, err := librenms.NewClient(
 
 | 资源 | 包名 | 主要方法 |
 |------|------|----------|
-| 设备 | `client.Device` | `List()`, `Get()`, `Add()`, `Update()`, `Delete()` |
-| 设备组 | `client.DeviceGroup` | `List()`, `Get()`, `Add()`, `Update()`, `Delete()` |
-| 位置 | `client.Location` | `List()`, `Get()`, `Add()`, `Update()`, `Delete()` |
-| 服务 | `client.Service` | `List()`, `Get()`, `Add()`, `Update()`, `Delete()` |
-| 告警 | `client.Alert` | `List()`, `Get()`, `Add()`, `Update()`, `Delete()` |
-| 告警规则 | `client.AlertRule` | `List()`, `Get()`, `Add()`, `Update()`, `Delete()` |
-| 端口 | `client.Port` | `List()`, `Get()`, `Add()`, `Update()`, `Delete()` |
+| 设备 | `client.Device` | `List()`, `Get()`, `Create()`, `Update()`, `Delete()` |
+| 设备组 | `client.DeviceGroup` | `List()`, `Get()`, `Create()`, `Update()`, `Delete()`, `GetMembers()` |
+| 位置 | `client.Location` | `List()`, `Get()`, `Create()`, `Update()`, `Delete()` |
+| 服务 | `client.Service` | `List()`, `Get()`, `Create()`, `Update()`, `Delete()`, `GetForHost()` |
+| 告警 | `client.Alert` | `List()`, `Get()`, `Ack()` |
+| 告警规则 | `client.AlertRule` | `List()`, `Get()`, `Create()`, `Update()`, `Delete()` |
+| 端口 | `client.Port` | `GetAllPorts()`, `SearchPorts()`, `SearchPortsInField()`, `GetPortsWithMAC()`, `GetPortInfo()`, `GetPortIPInfo()`, `GetPortTransceiver()`, `GetPortDescription()`, `UpdatePortDescription()` |
 | 系统 | `client.System` | `Get()` |
+| 库存 | `client.Inventory` | `GetInventory()`, `GetInventoryForDevice()` |
+| 路由 | `client.Routing` | `ListBGP()`, `GetBGP()`, `UpdateBGPDescription()`, `ListBGPCounters()`, `ListIPAddresses()`, `GetNetworkIPAddresses()`, `ListIPNetworks()`, `ListIPSec()`, `ListOSPF()`, `ListOSPFPorts()`, `ListOSPFv3()`, `ListOSPFv3Ports()`, `ListVRF()`, `GetVRF()`, `ListMPLSServices()`, `ListMPLSSAPs()` |
+| 交换 | `client.Switching` | `GetAllVLANs()`, `GetDeviceVLANs()`, `GetAllLinks()`, `GetDeviceLinks()`, `GetLink()`, `GetPortFDB()`, `GetPortFDBDetail()`, `GetPortNAC()` |
 
 ## 🧪 测试
 
@@ -164,13 +167,6 @@ client, err := librenms.NewClient(
 
 ```bash
 go test ./...
-```
-
-运行特定包的测试：
-
-```bash
-go test ./device
-go test ./alert
 ```
 
 ## 📖 完整示例

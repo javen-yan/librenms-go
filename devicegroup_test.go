@@ -45,7 +45,7 @@ func TestClient_GetDeviceGroup(t *testing.T) {
 
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
-	groupResp, err := testAPIClient.GetDeviceGroup("4")
+	groupResp, err := testAPIClient.DeviceGroup.Get("4")
 
 	r.NoError(err, "GetDeviceGroup returned an error")
 	r.NotNil(groupResp, "GetDeviceGroup response is nil")
@@ -64,7 +64,7 @@ func TestClient_GetDeviceGroups(t *testing.T) {
 
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
-	groupResp, err := testAPIClient.GetDeviceGroups()
+	groupResp, err := testAPIClient.DeviceGroup.List()
 
 	r.NoError(err, "GetDeviceGroups returned an error")
 	r.NotNil(groupResp, "GetDeviceGroups response is nil")
@@ -83,7 +83,7 @@ func TestClient_GetDeviceGroupMembers(t *testing.T) {
 
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
-	groupResp, err := testAPIClient.GetDeviceGroupMembers("4")
+	groupResp, err := testAPIClient.DeviceGroup.GetMembers("4")
 
 	r.NoError(err, "GetDeviceGroupMembers returned an error")
 	r.NotNil(groupResp, "GetDeviceGroupMembers response is nil")
@@ -124,7 +124,7 @@ func TestClient_CreateDeviceGroup(t *testing.T) {
 		Type:  "dynamic",
 	}
 
-	createResp, err := testAPIClient.CreateDeviceGroup(&newDeviceGroupRequest)
+	createResp, err := testAPIClient.DeviceGroup.Create(&newDeviceGroupRequest)
 
 	r.NoError(err, "CreateDeviceGroup returned an error")
 	r.NotNil(createResp, "CreateDeviceGroup response is nil")
@@ -211,7 +211,7 @@ func TestClient_CreateDeviceGroupNested(t *testing.T) {
 		Type:  "dynamic",
 	}
 
-	createResp, err := testAPIClient.CreateDeviceGroup(&newDeviceGroupRequest)
+	createResp, err := testAPIClient.DeviceGroup.Create(&newDeviceGroupRequest)
 
 	r.NoError(err, "CreateDeviceGroup returned an error")
 	r.NotNil(createResp, "CreateDeviceGroup response is nil")
@@ -231,7 +231,7 @@ func TestClient_CreateDeviceGroupStatic(t *testing.T) {
 		Type:    "static",
 	}
 
-	createResp, err := testAPIClient.CreateDeviceGroup(&newDeviceGroupRequest)
+	createResp, err := testAPIClient.DeviceGroup.Create(&newDeviceGroupRequest)
 
 	r.NoError(err, "CreateDeviceGroup returned an error")
 	r.NotNil(createResp, "CreateDeviceGroup response is nil")
@@ -245,7 +245,7 @@ func TestClient_DeleteDeviceGroup(t *testing.T) {
 
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
-	resp, err := testAPIClient.DeleteDeviceGroup("4")
+	resp, err := testAPIClient.DeviceGroup.Delete("4")
 
 	r.NoError(err, "DeleteDeviceGroup returned an error")
 	r.NotNil(resp, "DeleteDeviceGroup response is nil")
@@ -281,7 +281,7 @@ func TestClient_UpdateDeviceGroup(t *testing.T) {
 		Type:  "Dynamic",
 	}
 
-	createResp, err := testAPIClient.UpdateDeviceGroup("4", &deviceGroupRequest)
+	createResp, err := testAPIClient.DeviceGroup.Update("4", &deviceGroupRequest)
 
 	r.NoError(err, "UpdateDeviceGroup returned an error")
 	r.NotNil(createResp, "UpdateDeviceGroup response is nil")
