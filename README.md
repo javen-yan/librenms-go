@@ -3,7 +3,7 @@
 [![Go Version](https://img.shields.io/badge/Go-1.21+-blue.svg)](https://golang.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-LibreNMS Go SDK 是一个用于与 LibreNMS API 进行交互的 Go 语言客户端库。该库提供了完整的 CRUD 操作支持，适用于构建 LibreNMS 管理工具、自动化脚本或 Terraform Provider。
+LibreNMS Go SDK 是一个用于与 LibreNMS API 进行交互的 Go 语言客户端库。该库提供了完整的 CRUD 操作支持，适用于构建 LibreNMS 管理工具。
 
 ## 🚀 功能特性
 
