@@ -181,7 +181,6 @@ go test ./alert
 
 - [LibreNMS 官方文档](https://docs.librenms.org/)
 - [LibreNMS API 文档](https://docs.librenms.org/API/)
-- [Terraform Provider](https://github.com/jokelyo/terraform-provider-librenms)
 
 ## 🤝 贡献
 
