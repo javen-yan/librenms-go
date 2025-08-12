@@ -5,22 +5,23 @@ type (
 	Log struct {
 		Hostname  string `json:"hostname,omitempty"`
 		SysName   string `json:"sysName,omitempty"`
-		EventID   string `json:"event_id,omitempty"`
-		Host      string `json:"host,omitempty"`
-		DeviceID  string `json:"device_id,omitempty"`
+		EventID   int    `json:"event_id,omitempty"`
+		Host      int    `json:"host,omitempty"`
+		DeviceID  int    `json:"device_id,omitempty"`
 		DateTime  string `json:"datetime,omitempty"`
 		Message   string `json:"message,omitempty"`
 		Type      string `json:"type,omitempty"`
 		Reference string `json:"reference,omitempty"`
 		Username  string `json:"username,omitempty"`
-		Severity  string `json:"severity,omitempty"`
+		Severity  int    `json:"severity,omitempty"`
+		Details   any    `json:"details,omitempty"`
 	}
 
 	// LogsResponse represents a response containing logs from the LibreNMS API.
 	LogsResponse struct {
 		BaseResponse
-		Total string `json:"total,omitempty"`
-		Logs  []Log  `json:"logs"`
+		Total int   `json:"total,omitempty"`
+		Logs  []Log `json:"logs"`
 	}
 
 	// LogsQuery represents the query parameters for filtering logs.

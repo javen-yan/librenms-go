@@ -88,8 +88,8 @@ func TestLogsAPI_ListEventLogs(t *testing.T) {
 	if response.Count != 2 {
 		t.Errorf("Expected count 2, got %d", response.Count)
 	}
-	if response.Total != "15" {
-		t.Errorf("Expected total '15', got '%s'", response.Total)
+	if response.Total != 15 {
+		t.Errorf("Expected total '15', got '%d'", response.Total)
 	}
 	if len(response.Logs) != 2 {
 		t.Errorf("Expected 2 logs, got %d", len(response.Logs))
@@ -100,8 +100,8 @@ func TestLogsAPI_ListEventLogs(t *testing.T) {
 	if log.Hostname != "testdevice" {
 		t.Errorf("Expected hostname 'testdevice', got '%s'", log.Hostname)
 	}
-	if log.EventID != "10050349" {
-		t.Errorf("Expected event_id '10050349', got '%s'", log.EventID)
+	if log.EventID != 10050349 {
+		t.Errorf("Expected event_id '10050349', got '%d'", log.EventID)
 	}
 	if log.Message != "ifAlias:  ->  <pptp-something-something-tunnel-something>" {
 		t.Errorf("Expected message 'ifAlias:  ->  <pptp-something-something-tunnel-something>', got '%s'", log.Message)
