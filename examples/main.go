@@ -48,8 +48,8 @@ func main() {
 		fmt.Printf("Found %d devices\n", devices.Count)
 		for _, device := range devices.Devices {
 			display := ""
-			if device.Display != nil {
-				display = *device.Display
+			if device.Display != "" {
+				display = device.Display
 			}
 			fmt.Printf("- %s (%s) - %s\n", device.Hostname, display, device.OS)
 		}

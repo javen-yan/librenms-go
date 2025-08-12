@@ -6,74 +6,74 @@ type (
 	// Pointers are used for fields that may be null.
 	// A custom type Bool is used to represent booleans that may be defined as 0/1 by the API.
 	Device struct {
-		DeviceID int `json:"device_id"`
+		DeviceID int `json:"device_id,omitempty"`
 
-		AgentUptime             int      `json:"agent_uptime"`
-		AuthAlgorithm           *string  `json:"authalgo"`
-		AuthLevel               *string  `json:"authlevel"`
-		AuthName                *string  `json:"authname"`
-		AuthPass                *string  `json:"authpass"`
-		BGPLocalAS              *int     `json:"bgpLocalAs"`
-		Community               *string  `json:"community"`
-		CryptoAlgorithm         *string  `json:"cryptoalgo"`
-		CryptoPass              *string  `json:"cryptopass"`
-		DisableNotify           Bool     `json:"disable_notify"`
-		Disabled                Bool     `json:"disabled"`
-		Display                 *string  `json:"display"`
-		Features                *string  `json:"features"`
-		Hardware                string   `json:"hardware"`
-		Hostname                string   `json:"hostname"`
-		Icon                    string   `json:"icon"`
-		Ignore                  Bool     `json:"ignore"`
-		IgnoreStatus            Bool     `json:"ignore_status"`
-		Inserted                string   `json:"inserted"`
-		IP                      string   `json:"ip"`
-		LastDiscovered          *string  `json:"last_discovered"`
-		LastDiscoveredTimeTaken float64  `json:"last_discovered_timetaken"`
-		LastPing                *string  `json:"last_ping"`
-		LastPingTimeTaken       float64  `json:"last_ping_timetaken"`
-		LastPollAttempted       *string  `json:"last_poll_attempted"`
-		LastPolled              *string  `json:"last_pulled"`
-		LastPolledTimeTaken     float64  `json:"last_polled_timetaken"`
-		Latitude                *Float64 `json:"lat"`
-		Longitude               *Float64 `json:"lng"`
-		Location                *string  `json:"location"`
-		LocationID              *int     `json:"location_id"`
-		MaxDepth                *int     `json:"max_depth"`
-		Notes                   *string  `json:"notes"`
-		OS                      string   `json:"os"`
-		OverrideSysLocation     Bool     `json:"override_sysLocation"`
-		OverwriteIP             string   `json:"overwrite_ip"`
-		PollerGroup             int      `json:"poller_group"`
-		Port                    int      `json:"port"`
-		PortAssociationMode     int      `json:"port_association_mode"`
-		Purpose                 *string  `json:"purpose"`
-		Retries                 *int     `json:"retries"`
-		Serial                  *string  `json:"serial"`
-		SNMPDisable             Bool     `json:"snmp_disable"`
-		SNMPVersion             string   `json:"snmpver"`
-		Status                  Bool     `json:"status"` // /devices returns 0/1, and /devices/:id returns true/false
-		StatusReason            string   `json:"status_reason"`
-		SysContact              *string  `json:"sysContact"`
-		SysDescr                *string  `json:"sysDescr"`
-		SysName                 string   `json:"sysName"`
-		SysObjectID             *string  `json:"sysObjectID"`
-		Timeout                 *int     `json:"timeout"`
-		Transport               string   `json:"transport"`
-		Type                    string   `json:"type"`
-		Uptime                  *int64   `json:"uptime"`
-		Version                 *string  `json:"version"`
+		AgentUptime             int      `json:"agent_uptime,omitempty"`
+		AuthAlgorithm           string   `json:"authalgo,omitempty"`
+		AuthLevel               string   `json:"authlevel,omitempty"`
+		AuthName                string   `json:"authname,omitempty"`
+		AuthPass                string   `json:"authpass,omitempty"`
+		BGPLocalAS              int      `json:"bgpLocalAs,omitempty"`
+		Community               string   `json:"community,omitempty"`
+		CryptoAlgorithm         string   `json:"cryptoalgo,omitempty"`
+		CryptoPass              string   `json:"cryptopass,omitempty"`
+		DisableNotify           Bool     `json:"disable_notify,omitempty"`
+		Disabled                Bool     `json:"disabled,omitempty"`
+		Display                 string   `json:"display,omitempty"`
+		Features                string   `json:"features,omitempty"`
+		Hardware                string   `json:"hardware,omitempty"`
+		Hostname                string   `json:"hostname,omitempty"`
+		Icon                    string   `json:"icon,omitempty"`
+		Ignore                  Bool     `json:"ignore,omitempty"`
+		IgnoreStatus            Bool     `json:"ignore_status,omitempty"`
+		Inserted                string   `json:"inserted,omitempty"`
+		IP                      string   `json:"ip,omitempty"`
+		LastDiscovered          string   `json:"last_discovered"`
+		LastDiscoveredTimeTaken float64  `json:"last_discovered_timetaken,omitempty"`
+		LastPing                string   `json:"last_ping,omitempty"`
+		LastPingTimeTaken       float64  `json:"last_ping_timetaken,omitempty"`
+		LastPollAttempted       string   `json:"last_poll_attempted,omitempty"`
+		LastPolled              string   `json:"last_pulled,omitempty"`
+		LastPolledTimeTaken     float64  `json:"last_polled_timetaken,omitempty"`
+		Latitude                *Float64 `json:"lat,omitempty"`
+		Longitude               *Float64 `json:"lng,omitempty"`
+		Location                string   `json:"location,omitempty"`
+		LocationID              int      `json:"location_id,omitempty"`
+		MaxDepth                int      `json:"max_depth,omitempty"`
+		Notes                   string   `json:"notes,omitempty"`
+		OS                      string   `json:"os,omitempty"`
+		OverrideSysLocation     Bool     `json:"override_sysLocation,omitempty"`
+		OverwriteIP             string   `json:"overwrite_ip,omitempty"`
+		PollerGroup             int      `json:"poller_group,omitempty"`
+		Port                    int      `json:"port,omitempty"`
+		PortAssociationMode     int      `json:"port_association_mode,omitempty"`
+		Purpose                 string   `json:"purpose,omitempty"`
+		Retries                 int      `json:"retries,omitempty"`
+		Serial                  string   `json:"serial,omitempty"`
+		SNMPDisable             Bool     `json:"snmp_disable,omitempty"`
+		SNMPVersion             string   `json:"snmpver,omitempty"`
+		Status                  Bool     `json:"status,omitempty"` // /devices returns 0/1, and /devices/:id returns true/false
+		StatusReason            string   `json:"status_reason,omitempty"`
+		SysContact              string   `json:"sysContact,omitempty"`
+		SysDescr                string   `json:"sysDescr,omitempty"`
+		SysName                 string   `json:"sysName,omitempty"`
+		SysObjectID             string   `json:"sysObjectID,omitempty"`
+		Timeout                 int      `json:"timeout,omitempty"`
+		Transport               string   `json:"transport,omitempty"`
+		Type                    string   `json:"type,omitempty"`
+		Uptime                  int64    `json:"uptime,omitempty"`
+		Version                 string   `json:"version,omitempty"`
 	}
 
 	// DeviceCreateRequest represents the request body for creating a new device in LibreNMS.
 	DeviceCreateRequest struct {
-		Hostname            string `json:"hostname"`
+		Hostname            string `json:"hostname,omitempty"`
 		Display             string `json:"display,omitempty"`
 		ForceAdd            bool   `json:"force_add,omitempty"`
 		Hardware            string `json:"hardware,omitempty"`
 		Location            string `json:"location,omitempty"`
 		LocationID          int    `json:"location_id,omitempty"`
-		OS                  string `json:"os,omitempty"`
+		OS                  string `json:"os"`
 		OverrideSysLocation bool   `json:"override_sysLocation,omitempty"`
 		PingFallback        bool   `json:"ping_fallback,omitempty"`
 		PollerGroup         int    `json:"poller_group,omitempty"`
@@ -97,8 +97,8 @@ type (
 	// The `Field` slice contains the names of the field(s) to update,
 	// and `Data` contains the corresponding values. Only specify the fields you want to update.
 	DeviceUpdateRequest struct {
-		Field []string `json:"field"`
-		Data  []any    `json:"data"`
+		Field []string `json:"field,omitempty"`
+		Data  []any    `json:"data,omitempty"`
 	}
 
 	// DeviceResponse represents a response containing a list of devices from the LibreNMS API.
@@ -109,8 +109,8 @@ type (
 
 	// DeviceAvailability represents availability information for a device.
 	DeviceAvailability struct {
-		Duration         int     `json:"duration"`
-		AvailabilityPerc Float64 `json:"availability_perc"`
+		Duration         int     `json:"duration,omitempty"`
+		AvailabilityPerc Float64 `json:"availability_perc,omitempty"`
 	}
 
 	// DeviceAvailabilityResponse represents a response containing availability information for a device.
@@ -121,8 +121,8 @@ type (
 
 	// DeviceOutage represents an outage for a device.
 	DeviceOutage struct {
-		GoingDown int64 `json:"going_down"`
-		UpAgain   int64 `json:"up_again"`
+		GoingDown int64 `json:"going_down,omitempty"`
+		UpAgain   int64 `json:"up_again,omitempty"`
 	}
 
 	// DeviceOutagesResponse represents a response containing outages information for a device.
@@ -133,8 +133,8 @@ type (
 
 	// DeviceGraph represents a graph for a device.
 	DeviceGraph struct {
-		Desc string `json:"desc"`
-		Name string `json:"name"`
+		Desc string `json:"desc,omitempty"`
+		Name string `json:"name,omitempty"`
 	}
 
 	// DeviceGraphsResponse represents a response containing graphs information for a device.
@@ -145,7 +145,7 @@ type (
 
 	// DevicePort represents a port for a device.
 	DevicePort struct {
-		IfName string `json:"ifName"`
+		IfName string `json:"ifName,omitempty"`
 	}
 
 	// DevicePortsResponse represents a response containing ports information for a device.
@@ -156,13 +156,13 @@ type (
 
 	// DeviceFDB represents a FDB entry for a device.
 	DeviceFDB struct {
-		PortFDBID  int    `json:"ports_fdb_id"`
-		PortID     int    `json:"port_id"`
-		MacAddress string `json:"mac_address"`
-		VlanID     int    `json:"vlan_id"`
-		DeviceID   int    `json:"device_id"`
-		CreatedAt  string `json:"created_at"`
-		UpdatedAt  string `json:"updated_at"`
+		PortFDBID  int    `json:"ports_fdb_id,omitempty"`
+		PortID     int    `json:"port_id,omitempty"`
+		MacAddress string `json:"mac_address,omitempty"`
+		VlanID     int    `json:"vlan_id,omitempty"`
+		DeviceID   int    `json:"device_id,omitempty"`
+		CreatedAt  string `json:"created_at,omitempty"`
+		UpdatedAt  string `json:"updated_at,omitempty"`
 	}
 
 	// DeviceFDBResponse represents a response containing FDB information for a device.
@@ -173,26 +173,26 @@ type (
 
 	// DeviceNAC represents a NAC entry for a device.
 	DeviceNAC struct {
-		PortNACID   int     `json:"ports_nac_id"`
-		AuthID      string  `json:"auth_id"`
-		DeviceID    int     `json:"device_id"`
-		PortID      int     `json:"port_id"`
-		Domain      string  `json:"domain"`
-		Username    string  `json:"username"`
-		MacAddress  string  `json:"mac_address"`
-		IPAddress   string  `json:"ip_address"`
-		HostMode    string  `json:"host_mode"`
-		AuthzStatus string  `json:"authz_status"`
-		AuthzBy     string  `json:"authz_by"`
-		AuthcStatus string  `json:"authc_status"`
-		Method      string  `json:"method"`
-		Timeout     string  `json:"timeout"`
-		TimeLeft    string  `json:"time_left"`
-		Vlan        int     `json:"vlan"`
-		TimeElapsed *string `json:"time_elapsed"`
-		CreatedAt   string  `json:"created_at"`
-		UpdatedAt   string  `json:"updated_at"`
-		Historical  int     `json:"historical"`
+		PortNACID   int    `json:"ports_nac_id,omitempty"`
+		AuthID      string `json:"auth_id,omitempty"`
+		DeviceID    int    `json:"device_id,omitempty"`
+		PortID      int    `json:"port_id,omitempty"`
+		Domain      string `json:"domain,omitempty"`
+		Username    string `json:"username,omitempty"`
+		MacAddress  string `json:"mac_address,omitempty"`
+		IPAddress   string `json:"ip_address,omitempty"`
+		HostMode    string `json:"host_mode,omitempty"`
+		AuthzStatus string `json:"authz_status,omitempty"`
+		AuthzBy     string `json:"authz_by,omitempty"`
+		AuthcStatus string `json:"authc_status,omitempty"`
+		Method      string `json:"method,omitempty"`
+		Timeout     string `json:"timeout,omitempty"`
+		TimeLeft    string `json:"time_left,omitempty"`
+		Vlan        int    `json:"vlan,omitempty"`
+		TimeElapsed string `json:"time_elapsed,omitempty"`
+		CreatedAt   string `json:"created_at,omitempty"`
+		UpdatedAt   string `json:"updated_at,omitempty"`
+		Historical  int    `json:"historical,omitempty"`
 	}
 	// DeviceNACResponse represents a response containing NAC information for a device.
 	DeviceNACResponse struct {
@@ -200,28 +200,18 @@ type (
 		NAC []DeviceNAC `json:"nac"`
 	}
 
-	// DeviceIPAddress represents an IP address for a device.
-	DeviceIPAddress struct {
-		IPv4AddressID int    `json:"ipv4_address_id"`
-		IPv4Address   string `json:"ipv4_address"`
-		IPv4Prefixlen int    `json:"ipv4_prefixlen"`
-		IPv4NetworkID int    `json:"ipv4_network_id"`
-		PortID        int    `json:"port_id"`
-		ContextName   string `json:"context_name"`
-	}
-
 	// DeviceIPAddressesResponse represents a response containing IP addresses information for a device.
 	DeviceIPAddressesResponse struct {
 		BaseResponse
-		IPAddresses []DeviceIPAddress `json:"addresses"`
+		IPAddresses []IPAddress `json:"addresses"`
 	}
 
 	// DevicePortStack represents a port stack for a device.
 	DevicePortStack struct {
-		DeviceID      int    `json:"device_id"`
-		PortIDHigh    int    `json:"port_id_high"`
-		PortIDLow     int    `json:"port_id_low"`
-		IfStackStatus string `json:"ifStackStatus"`
+		DeviceID      int    `json:"device_id,omitempty"`
+		PortIDHigh    int    `json:"port_id_high,omitempty"`
+		PortIDLow     int    `json:"port_id_low,omitempty"`
+		IfStackStatus string `json:"ifStackStatus,omitempty"`
 	}
 
 	// DevicePortStackResponse represents a response containing port stack information for a device.
@@ -232,26 +222,26 @@ type (
 
 	// DeviceTransceiver represents a transceiver for a device.
 	DeviceTransceiver struct {
-		ID         int     `json:"id"`
-		CreatedAt  string  `json:"created_at"`
-		UpdatedAt  string  `json:"updated_at"`
-		DeviceID   int     `json:"device_id"`
-		PortID     int     `json:"port_id"`
-		Index      string  `json:"index"`
-		Type       string  `json:"type"`
-		Vendor     string  `json:"vendor"`
-		OUI        string  `json:"oui"`
-		Model      *string `json:"model"`
-		Revision   string  `json:"revision"`
-		Serial     string  `json:"serial"`
-		Date       *string `json:"date"`
-		DDM        bool    `json:"ddm"`
-		Encoding   *string `json:"encoding"`
-		Cable      string  `json:"cable"`
-		Distance   int     `json:"distance"`
-		Wavelength int     `json:"wavelength"`
-		Connector  string  `json:"connector"`
-		Channels   int     `json:"channels"`
+		ID         int    `json:"id,omitempty"`
+		CreatedAt  string `json:"created_at,omitempty"`
+		UpdatedAt  string `json:"updated_at,omitempty"`
+		DeviceID   int    `json:"device_id,omitempty"`
+		PortID     int    `json:"port_id,omitempty"`
+		Index      string `json:"index,omitempty"`
+		Type       string `json:"type,omitempty"`
+		Vendor     string `json:"vendor,omitempty"`
+		OUI        string `json:"oui,omitempty"`
+		Model      string `json:"model,omitempty"`
+		Revision   string `json:"revision,omitempty"`
+		Serial     string `json:"serial,omitempty"`
+		Date       string `json:"date,omitempty"`
+		DDM        bool   `json:"ddm,omitempty"`
+		Encoding   string `json:"encoding,omitempty"`
+		Cable      string `json:"cable,omitempty"`
+		Distance   int    `json:"distance,omitempty"`
+		Wavelength int    `json:"wavelength,omitempty"`
+		Connector  string `json:"connector,omitempty"`
+		Channels   int    `json:"channels,omitempty"`
 	}
 
 	// DeviceTransceiversResponse represents a response containing transceivers information for a device.
@@ -272,40 +262,40 @@ type (
 
 	// DeviceComponent represents a component for a device.
 	DeviceComponent struct {
-		TestAttribute1 string `json:"TestAttribute-1"`
-		TestAttribute2 string `json:"TestAttribute-2"`
-		TestAttribute3 string `json:"TestAttribute-3"`
-		Type           string `json:"type"`
-		Label          string `json:"label"`
-		Status         string `json:"status"`
-		Ignore         bool   `json:"ignore"`
-		Disabled       bool   `json:"disabled"`
+		TestAttribute1 string `json:"TestAttribute-1,omitempty"`
+		TestAttribute2 string `json:"TestAttribute-2,omitempty"`
+		TestAttribute3 string `json:"TestAttribute-3,omitempty"`
+		Type           string `json:"type,omitempty"`
+		Label          string `json:"label,omitempty"`
+		Status         string `json:"status,omitempty"`
+		Ignore         bool   `json:"ignore,omitempty"`
+		Disabled       bool   `json:"disabled,omitempty"`
 	}
 
 	// DeviceComponentsResponse represents a response containing components information for a device.
 	DeviceComponentsResponse struct {
 		BaseResponse
-		Components map[string]DeviceComponent `json:"components"`
+		Components map[string]DeviceComponent `json:"components,omitempty"`
 	}
 
 	// PortStats represents port stats for a device.
 	PortStats struct {
-		PortID     int `json:"port_id"`
-		DeviceID   int `json:"device_id"`
-		PollPrev   int `json:"poll_prev"`
-		PollPeriod int `json:"poll_period"`
+		PortID     int `json:"port_id,omitempty"`
+		DeviceID   int `json:"device_id,omitempty"`
+		PollPrev   int `json:"poll_prev,omitempty"`
+		PollPeriod int `json:"poll_period,omitempty"`
 	}
 
 	// DevicePortStatsResponse represents a response containing port stats information for a device.
 	DevicePortStatsResponse struct {
 		BaseResponse
-		Port PortStats `json:"port"`
+		Port PortStats `json:"port,omitempty"`
 	}
 
 	// DeviceMaintenanceResponse represents a response containing maintenance information for a device.
 	DeviceMaintenanceResponse struct {
 		BaseResponse
-		IsUnderMaintenance bool `json:"is_under_maintenance"`
+		IsUnderMaintenance bool `json:"is_under_maintenance,omitempty"`
 	}
 
 	// DeviceMaintenanceRequest represents a request to set maintenance for a device.
@@ -313,7 +303,7 @@ type (
 		Title    string `json:"title,omitempty"`
 		Notes    string `json:"notes,omitempty"`
 		Start    string `json:"start,omitempty"`
-		Duration string `json:"duration"`
+		Duration string `json:"duration,omitempty"`
 	}
 
 	// DeviceGroupsResponse represents a response containing groups information for a device.

@@ -3,19 +3,19 @@ package types
 type (
 	// Service represents a service in LibreNMS.
 	Service struct {
-		ID          int    `json:"service_id"`
-		Changed     int64  `json:"service_changed"`
-		Description string `json:"service_desc"`
-		DeviceID    int    `json:"device_id"`
-		DS          string `json:"service_ds"`
-		Ignore      Bool   `json:"service_ignore"`
-		IP          string `json:"service_ip"`
-		Message     string `json:"service_message"`
-		Name        string `json:"service_name"`
-		Param       string `json:"service_param"`
-		Status      int    `json:"service_status"` // assuming this follows Nagios conventions, 0=ok, 1=warning, 2=critical, 3=unknown
-		TemplateID  int    `json:"service_template_id"`
-		Type        string `json:"service_type"`
+		ID          int    `json:"service_id,omitempty"`
+		Changed     int64  `json:"service_changed,omitempty"`
+		Description string `json:"service_desc,omitempty"`
+		DeviceID    int    `json:"device_id,omitempty"`
+		DS          string `json:"service_ds,omitempty"`
+		Ignore      Bool   `json:"service_ignore,omitempty"`
+		IP          string `json:"service_ip,omitempty"`
+		Message     string `json:"service_message,omitempty"`
+		Name        string `json:"service_name,omitempty"`
+		Param       string `json:"service_param,omitempty"`
+		Status      int    `json:"service_status,omitempty"` // assuming this follows Nagios conventions, 0=ok, 1=warning, 2=critical, 3=unknown
+		TemplateID  int    `json:"service_template_id,omitempty"`
+		Type        string `json:"service_type,omitempty"`
 	}
 
 	// ServiceCreateRequest represents the request payload for creating a service.
@@ -33,12 +33,12 @@ type (
 	// Only set the field(s) you want to update. Trying to patch fields that have not changed will
 	// result in an HTTP 500 error.
 	ServiceUpdateRequest struct {
-		Name        *string
-		Description *string
-		IP          *string
-		Ignore      *bool
-		Param       *string
-		Type        *string
+		Name        string `json:"name,omitempty"`
+		Description string `json:"desc,omitempty"`
+		IP          string `json:"ip,omitempty"`
+		Ignore      *bool  `json:"ignore,omitempty"`
+		Param       string `json:"param,omitempty"`
+		Type        string `json:"type,omitempty"`
 	}
 
 	// serviceResponse is the internal response structure for services.
@@ -75,19 +75,19 @@ func NewServiceUpdateRequest() *ServiceUpdateRequest {
 
 // SetDescription sets the description of the service in the update request.
 func (r *ServiceUpdateRequest) SetDescription(description string) *ServiceUpdateRequest {
-	r.Description = &description
+	r.Description = description
 	return r
 }
 
 // SetName sets the name of the service in the update request.
 func (r *ServiceUpdateRequest) SetName(name string) *ServiceUpdateRequest {
-	r.Name = &name
+	r.Name = name
 	return r
 }
 
 // SetIP sets the IP address of the service in the update request.
 func (r *ServiceUpdateRequest) SetIP(ip string) *ServiceUpdateRequest {
-	r.IP = &ip
+	r.IP = ip
 	return r
 }
 
@@ -99,13 +99,13 @@ func (r *ServiceUpdateRequest) SetIgnore(ignore bool) *ServiceUpdateRequest {
 
 // SetParam sets the parameter of the service in the update request.
 func (r *ServiceUpdateRequest) SetParam(param string) *ServiceUpdateRequest {
-	r.Param = &param
+	r.Param = param
 	return r
 }
 
 // SetType sets the type of the service in the update request.
 func (r *ServiceUpdateRequest) SetType(serviceType string) *ServiceUpdateRequest {
-	r.Type = &serviceType
+	r.Type = serviceType
 	return r
 }
 
@@ -114,29 +114,24 @@ func (r *ServiceUpdateRequest) SetType(serviceType string) *ServiceUpdateRequest
 // `omitempty` issues with the JSON encoder).
 func (r *ServiceUpdateRequest) Payload() map[string]interface{} {
 	payload := make(map[string]interface{})
-	if r.Name != nil {
-		payload["service_name"] = *r.Name
+	if r.Name != "" {
+		payload["service_name"] = r.Name
 	}
-	if r.Description != nil {
-		payload["service_desc"] = *r.Description
+	if r.Description != "" {
+		payload["service_desc"] = r.Description
 	}
-	if r.IP != nil {
-		payload["service_ip"] = *r.IP
+	if r.IP != "" {
+		payload["service_ip"] = r.IP
 	}
 	if r.Ignore != nil {
-		payload["service_ignore"] = func() int {
-			if *r.Ignore {
-				return 1
-			}
-			return 0
-		}()
+		payload["service_ignore"] = *r.Ignore
 	}
 
-	if r.Param != nil {
-		payload["service_param"] = *r.Param
+	if r.Param != "" {
+		payload["service_param"] = r.Param
 	}
-	if r.Type != nil {
-		payload["service_type"] = *r.Type
+	if r.Type != "" {
+		payload["service_type"] = r.Type
 	}
 	return payload
 }

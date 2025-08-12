@@ -3,20 +3,20 @@ package types
 type (
 	// Location represents a location in LibreNMS.
 	Location struct {
-		ID               int     `json:"id"`
-		FixedCoordinates Bool    `json:"fixed_coordinates"`
-		Latitude         Float64 `json:"lat"`
-		Longitude        Float64 `json:"lng"`
-		Name             string  `json:"location"`
-		Timestamp        string  `json:"timestamp"`
+		ID               int     `json:"id,omitempty"`
+		FixedCoordinates Bool    `json:"fixed_coordinates,omitempty"`
+		Latitude         Float64 `json:"lat,omitempty"`
+		Longitude        Float64 `json:"lng,omitempty"`
+		Name             string  `json:"location,omitempty"`
+		Timestamp        string  `json:"timestamp,omitempty"`
 	}
 
 	// LocationCreateRequest represents the request payload for creating a location.
 	LocationCreateRequest struct {
-		Name             string  `json:"location"`
-		FixedCoordinates Bool    `json:"fixed_coordinates"`
-		Latitude         float64 `json:"lat"`
-		Longitude        float64 `json:"lng"`
+		Name             string  `json:"location,omitempty"`
+		FixedCoordinates Bool    `json:"fixed_coordinates,omitempty"`
+		Latitude         float64 `json:"lat,omitempty"`
+		Longitude        float64 `json:"lng,omitempty"`
 	}
 
 	// LocationUpdateRequest represents the request payload for updating a location.
@@ -24,7 +24,7 @@ type (
 	// Only set the field(s) you want to update. Trying to patch fields that have not changed will
 	// result in an HTTP 500 error.
 	LocationUpdateRequest struct {
-		Name             *string
+		Name             string
 		FixedCoordinates *bool
 		Latitude         *float64
 		Longitude        *float64
@@ -32,8 +32,8 @@ type (
 
 	// LocationResponse represents a response containing a single location from the LibreNMS API.
 	LocationResponse struct {
-		Status   string   `json:"status"`
-		Location Location `json:"get_location"`
+		Status   string   `json:"status,omitempty"`
+		Location Location `json:"get_location,omitempty"`
 	}
 
 	// LocationsResponse represents a response containing a list of locations from the LibreNMS API.
@@ -68,15 +68,15 @@ func (r *LocationUpdateRequest) SetLongitude(lng float64) *LocationUpdateRequest
 
 // SetName sets the name of the location in the LocationUpdateRequest.
 func (r *LocationUpdateRequest) SetName(name string) *LocationUpdateRequest {
-	r.Name = &name
+	r.Name = name
 	return r
 }
 
 // payload converts the LocationUpdateRequest to a map for the API request.
 func (r *LocationUpdateRequest) Payload() map[string]interface{} {
 	payload := make(map[string]interface{})
-	if r.Name != nil {
-		payload["location"] = *r.Name
+	if r.Name != "" {
+		payload["location"] = r.Name
 	}
 	if r.FixedCoordinates != nil {
 		payload["fixed_coordinates"] = *r.FixedCoordinates

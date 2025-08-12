@@ -3,23 +3,23 @@ package types
 type (
 	// Log represents a log entry in LibreNMS.
 	Log struct {
-		Hostname  string `json:"hostname"`
-		SysName   string `json:"sysName"`
-		EventID   string `json:"event_id"`
-		Host      string `json:"host"`
-		DeviceID  string `json:"device_id"`
-		DateTime  string `json:"datetime"`
-		Message   string `json:"message"`
-		Type      string `json:"type"`
-		Reference string `json:"reference"`
-		Username  string `json:"username"`
-		Severity  string `json:"severity"`
+		Hostname  string `json:"hostname,omitempty"`
+		SysName   string `json:"sysName,omitempty"`
+		EventID   string `json:"event_id,omitempty"`
+		Host      string `json:"host,omitempty"`
+		DeviceID  string `json:"device_id,omitempty"`
+		DateTime  string `json:"datetime,omitempty"`
+		Message   string `json:"message,omitempty"`
+		Type      string `json:"type,omitempty"`
+		Reference string `json:"reference,omitempty"`
+		Username  string `json:"username,omitempty"`
+		Severity  string `json:"severity,omitempty"`
 	}
 
 	// LogsResponse represents a response containing logs from the LibreNMS API.
 	LogsResponse struct {
 		BaseResponse
-		Total string `json:"total"`
+		Total string `json:"total,omitempty"`
 		Logs  []Log  `json:"logs"`
 	}
 
@@ -36,11 +36,11 @@ type (
 	SyslogMessage struct {
 		Msg       string `json:"msg"`                  // The log message
 		Host      string `json:"host"`                 // The hostname or IP address
-		Facility  *int   `json:"facility,omitempty"`   // Syslog facility (optional)
+		Facility  int    `json:"facility,omitempty"`   // Syslog facility (optional)
 		Priority  string `json:"priority,omitempty"`   // Syslog priority (optional)
 		Program   string `json:"program,omitempty"`    // Program name (optional)
 		Timestamp string `json:"@timestamp,omitempty"` // ISO timestamp (optional)
-		Severity  *int   `json:"severity,omitempty"`   // Severity level (optional)
+		Severity  int    `json:"severity,omitempty"`   // Severity level (optional)
 		Level     string `json:"level,omitempty"`      // Log level (optional)
 	}
 

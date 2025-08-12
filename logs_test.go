@@ -373,12 +373,12 @@ func TestLogsAPI_Syslogsink(t *testing.T) {
 		},
 		{
 			Msg:       "Line protocol on Interface GigabitEthernet1/0/41, changed state to up",
-			Facility:  intPtr(23),
+			Facility:  23,
 			Priority:  "189",
 			Program:   "LINEPROTO-5-UPDOWN",
 			Host:      "172.29.10.24",
 			Timestamp: time.Now().UTC().Format(time.RFC3339),
-			Severity:  intPtr(5),
+			Severity:  5,
 			Level:     "ERROR",
 		},
 	}

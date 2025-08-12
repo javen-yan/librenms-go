@@ -4,8 +4,8 @@
   "count": 1,
   "ports": [
     {
-      "port_id": "1",
-      "device_id": "1",
+      "port_id": 1,
+      "device_id": 1,
       "ifIndex": "1",
       "ifName": "GigabitEthernet1/0/1",
       "ifDescr": "Uplink to Core Switch",

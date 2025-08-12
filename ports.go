@@ -21,8 +21,8 @@ func (p *PortAPI) GetAllPorts(params *types.PortsQueryParams) (*types.PortsRespo
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
 		if len(query) > 0 {
 			queryParams = &query
@@ -49,8 +49,8 @@ func (p *PortAPI) SearchPorts(search string, params *types.PortsQueryParams) (*t
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
 		if len(query) > 0 {
 			queryParams = &query
@@ -77,8 +77,8 @@ func (p *PortAPI) SearchPortsInField(field, search string, params *types.PortsQu
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
 		if len(query) > 0 {
 			queryParams = &query
@@ -105,8 +105,8 @@ func (p *PortAPI) GetPortsWithMAC(mac string, params *types.PortsQueryParams) (*
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Filter != nil {
-			query.Set("filter", *params.Filter)
+		if params.Filter != "" {
+			query.Set("filter", params.Filter)
 		}
 		if len(query) > 0 {
 			queryParams = &query

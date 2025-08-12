@@ -110,7 +110,7 @@ func TestClient_CreateDevice(t *testing.T) {
 
 	// Verify that SNMPCommunity is not empty
 	r.NotEmpty(deviceInResponse.Community, "Expected SNMPCommunity to be set in the response")
-	r.Equal("public", *deviceInResponse.Community, "Expected SNMPCommunity 'public' in response")
+	r.Equal("public", deviceInResponse.Community, "Expected SNMPCommunity 'public' in response")
 }
 
 func TestClient_DeleteDevice(t *testing.T) {

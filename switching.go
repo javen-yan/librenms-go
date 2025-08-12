@@ -23,11 +23,11 @@ func (s *SwitchingAPI) GetAllVLANs(params *types.SwitchingQueryParams) (*types.V
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
-		if params.Filter != nil {
-			query.Set("filter", *params.Filter)
+		if params.Filter != "" {
+			query.Set("filter", params.Filter)
 		}
 		if len(query) > 0 {
 			queryParams = &query
@@ -54,11 +54,11 @@ func (s *SwitchingAPI) GetDeviceVLANs(hostname string, params *types.SwitchingQu
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
-		if params.Filter != nil {
-			query.Set("filter", *params.Filter)
+		if params.Filter != "" {
+			query.Set("filter", params.Filter)
 		}
 		if len(query) > 0 {
 			queryParams = &query
@@ -82,11 +82,11 @@ func (s *SwitchingAPI) GetAllLinks(params *types.SwitchingQueryParams) (*types.L
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
-		if params.Filter != nil {
-			query.Set("filter", *params.Filter)
+		if params.Filter != "" {
+			query.Set("filter", params.Filter)
 		}
 		if len(query) > 0 {
 			queryParams = &query
@@ -113,11 +113,11 @@ func (s *SwitchingAPI) GetDeviceLinks(hostname string, params *types.SwitchingQu
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
-		if params.Filter != nil {
-			query.Set("filter", *params.Filter)
+		if params.Filter != "" {
+			query.Set("filter", params.Filter)
 		}
 		if len(query) > 0 {
 			queryParams = &query
@@ -143,11 +143,11 @@ func (s *SwitchingAPI) GetLink(linkID int, params *types.SwitchingQueryParams) (
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
-		if params.Filter != nil {
-			query.Set("filter", *params.Filter)
+		if params.Filter != "" {
+			query.Set("filter", params.Filter)
 		}
 		if len(query) > 0 {
 			queryParams = &query
@@ -177,11 +177,11 @@ func (s *SwitchingAPI) GetPortFDB(mac string, params *types.SwitchingQueryParams
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
-		if params.Filter != nil {
-			query.Set("filter", *params.Filter)
+		if params.Filter != "" {
+			query.Set("filter", params.Filter)
 		}
 		if len(query) > 0 {
 			queryParams = &query
@@ -208,11 +208,11 @@ func (s *SwitchingAPI) GetPortFDBDetail(mac string, params *types.SwitchingQuery
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
-		if params.Filter != nil {
-			query.Set("filter", *params.Filter)
+		if params.Filter != "" {
+			query.Set("filter", params.Filter)
 		}
 		if len(query) > 0 {
 			queryParams = &query
@@ -242,11 +242,11 @@ func (s *SwitchingAPI) GetPortNAC(mac string, params *types.SwitchingQueryParams
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.Columns != nil {
-			query.Set("columns", *params.Columns)
+		if params.Columns != "" {
+			query.Set("columns", params.Columns)
 		}
-		if params.Filter != nil {
-			query.Set("filter", *params.Filter)
+		if params.Filter != "" {
+			query.Set("filter", params.Filter)
 		}
 		if len(query) > 0 {
 			queryParams = &query

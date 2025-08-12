@@ -23,11 +23,11 @@ func (i *InventoryAPI) GetInventory(hostname string, params *types.InventoryPara
 	var queryParams *url.Values
 	if params != nil {
 		query := url.Values{}
-		if params.EntPhysicalClass != nil {
-			query.Set("entPhysicalClass", *params.EntPhysicalClass)
+		if params.EntPhysicalClass != "" {
+			query.Set("entPhysicalClass", params.EntPhysicalClass)
 		}
-		if params.EntPhysicalContainedIn != nil {
-			query.Set("entPhysicalContainedIn", *params.EntPhysicalContainedIn)
+		if params.EntPhysicalContainedIn != "" {
+			query.Set("entPhysicalContainedIn", params.EntPhysicalContainedIn)
 		}
 		if len(query) > 0 {
 			queryParams = &query

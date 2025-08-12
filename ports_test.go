@@ -35,8 +35,8 @@ func TestClient_GetPorts(t *testing.T) {
 	r.Len(portsResp.Ports, 1, "Expected 1 port")
 
 	port := portsResp.Ports[0]
-	r.Equal("1", port.PortID, "Expected Port ID 1")
-	r.Equal("1", port.DeviceID, "Expected DeviceID 1")
+	r.Equal(1, port.PortID, "Expected Port ID 1")
+	r.Equal(1, port.DeviceID, "Expected DeviceID 1")
 	r.Equal("1", port.IfIndex, "Expected IfIndex 1")
 	r.Equal("GigabitEthernet1/0/1", port.IfName, "Expected IfName 'GigabitEthernet1/0/1'")
 	r.Equal("Uplink to Core Switch", port.IfDescr, "Expected IfDescr 'Uplink to Core Switch'")

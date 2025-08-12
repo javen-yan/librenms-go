@@ -120,7 +120,7 @@ func TestClient_CreateDeviceGroup(t *testing.T) {
 
 	newDeviceGroupRequest := types.DeviceGroupCreateRequest{
 		Name:  "Test Group",
-		Rules: func() *string { s := rules.MustJSON(); return &s }(),
+		Rules: rules.MustJSON(),
 		Type:  "dynamic",
 	}
 
@@ -207,7 +207,7 @@ func TestClient_CreateDeviceGroupNested(t *testing.T) {
 
 	newDeviceGroupRequest := types.DeviceGroupCreateRequest{
 		Name:  "Test Group",
-		Rules: func() *string { s := rules.MustJSON(); return &s }(),
+		Rules: rules.MustJSON(),
 		Type:  "dynamic",
 	}
 
@@ -277,7 +277,7 @@ func TestClient_UpdateDeviceGroup(t *testing.T) {
 
 	deviceGroupRequest := types.DeviceGroupUpdateRequest{
 		Name:  "Test Group",
-		Rules: func() *string { s := rules.MustJSON(); return &s }(),
+		Rules: rules.MustJSON(),
 		Type:  "Dynamic",
 	}
 

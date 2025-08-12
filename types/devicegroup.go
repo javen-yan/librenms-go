@@ -5,20 +5,20 @@ import "encoding/json"
 type (
 	// DeviceGroup represents a device group in LibreNMS.
 	DeviceGroup struct {
-		ID          int                      `json:"id"`
-		Name        string                   `json:"name"`
-		Description *string                  `json:"desc"`
-		Pattern     *string                  `json:"pattern"`
-		Rules       DeviceGroupRuleContainer `json:"rules"`
-		Type        string                   `json:"type"`
+		ID          int                      `json:"id,omitempty"`
+		Name        string                   `json:"name,omitempty"`
+		Description string                   `json:"desc,omitempty"`
+		Pattern     string                   `json:"pattern,omitempty"`
+		Rules       DeviceGroupRuleContainer `json:"rules,omitempty"`
+		Type        string                   `json:"type,omitempty"`
 	}
 
 	// DeviceGroupRuleContainer represents the top-level container for device group rules.
 	DeviceGroupRuleContainer struct {
-		Condition string            `json:"condition"`
-		Joins     [][]string        `json:"joins"`
-		Rules     []DeviceGroupRule `json:"rules"`
-		Valid     bool              `json:"valid"`
+		Condition string            `json:"condition,omitempty"`
+		Joins     [][]string        `json:"joins,omitempty"`
+		Rules     []DeviceGroupRule `json:"rules,omitempty"`
+		Valid     bool              `json:"valid,omitempty"`
 	}
 
 	// DeviceGroupRule represents a rule within a device group. This is a recursive structure.
@@ -43,11 +43,11 @@ type (
 	// structure. Define your rules using the DeviceGroupRuleContainer struct and then
 	// serialize it using its JSON() method.
 	DeviceGroupCreateRequest struct {
-		Name        string  `json:"name"`
-		Description *string `json:"desc,omitempty"`
-		Devices     []int   `json:"devices,omitempty"`
-		Rules       *string `json:"rules,omitempty"`
-		Type        string  `json:"type"`
+		Name        string `json:"name"`
+		Description string `json:"desc,omitempty"`
+		Devices     []int  `json:"devices,omitempty"`
+		Rules       string `json:"rules,omitempty"`
+		Type        string `json:"type"`
 	}
 
 	// DeviceGroupUpdateRequest represents the request payload for updating a device group.
@@ -56,11 +56,11 @@ type (
 	// structure. Define your rules using the DeviceGroupRuleContainer struct and then
 	// serialize it using its JSON() method.
 	DeviceGroupUpdateRequest struct {
-		Name        string  `json:"name,omitempty"`
-		Description *string `json:"desc,omitempty"`
-		Devices     []int   `json:"devices,omitempty"`
-		Rules       *string `json:"rules,omitempty"`
-		Type        string  `json:"type,omitempty"`
+		Name        string `json:"name,omitempty"`
+		Description string `json:"desc,omitempty"`
+		Devices     []int  `json:"devices,omitempty"`
+		Rules       string `json:"rules,omitempty"`
+		Type        string `json:"type,omitempty"`
 	}
 
 	// DeviceGroupResponse represents a response containing a list of device groups from the LibreNMS API.
@@ -71,7 +71,7 @@ type (
 
 	// DeviceGroupMember represents a member of a device group.
 	DeviceGroupMember struct {
-		ID int `json:"device_id"`
+		ID int `json:"device_id,omitempty"`
 	}
 
 	// DeviceGroupMembersResponse represents a response containing the members of a device group.
@@ -83,7 +83,7 @@ type (
 	// DeviceGroupCreateResponse represents a creation response.
 	DeviceGroupCreateResponse struct {
 		BaseResponse
-		ID int `json:"id"`
+		ID int `json:"id,omitempty"`
 	}
 )
 
