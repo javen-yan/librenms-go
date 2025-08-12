@@ -59,7 +59,8 @@ func (a *AlertAPI) List(query *types.AlertsQuery) (*types.AlertsResponse, error)
 // UnmuteAlert unmutes an alert by its ID in the LibreNMS API.
 //
 // Documentation: https://docs.librenms.org/API/Alerts/#unmute_alert
-func (c *Client) UnmuteAlert(alertID int) (*types.BaseResponse, error) {
+func (a *AlertAPI) UnmuteAlert(alertID int) (*types.BaseResponse, error) {
+	c := a.client
 	req, err := c.newRequest(http.MethodPut, fmt.Sprintf("%s/unmute/%d", alertEndpoint, alertID), nil, nil)
 	if err != nil {
 		return nil, err

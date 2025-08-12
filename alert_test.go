@@ -129,7 +129,7 @@ func TestClient_UnmuteAlert(t *testing.T) {
 
 	r.NotNil(testAPIClient, "Global testAPIClient should be initialized")
 
-	resp, err := testAPIClient.UnmuteAlert(testAlertID)
+	resp, err := testAPIClient.Alert.UnmuteAlert(testAlertID)
 
 	r.NoError(err, "UnmuteAlert returned an error")
 	r.NotNil(resp, "UnmuteAlert response is nil")
