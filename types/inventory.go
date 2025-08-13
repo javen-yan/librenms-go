@@ -2,8 +2,8 @@ package types
 
 type (
 	InventoryItem struct {
-			EntPhysicalID           int    `json:"entPhysical_id,omitempty"`
-	DeviceID                int    `json:"device_id,omitempty"`
+		EntPhysicalID           int    `json:"entPhysical_id,omitempty"`
+		DeviceID                int    `json:"device_id,omitempty"`
 		EntPhysicalIndex        int    `json:"entPhysicalIndex,omitempty"`
 		EntPhysicalDescr        string `json:"entPhysicalDescr,omitempty"`
 		EntPhysicalClass        string `json:"entPhysicalClass,omitempty"`
@@ -33,7 +33,7 @@ type (
 	}
 
 	InventoryParams struct {
-		EntPhysicalClass       string `url:"entPhysicalClass,omitempty"`
-		EntPhysicalContainedIn string `url:"entPhysicalContainedIn,omitempty"`
+		EntPhysicalClass       string `form:"entPhysicalClass,omitempty"`
+		EntPhysicalContainedIn string `form:"entPhysicalContainedIn,omitempty"`
 	}
 )

@@ -26,11 +26,11 @@ type (
 
 	// LogsQuery represents the query parameters for filtering logs.
 	LogsQuery struct {
-		Start     int    `url:"start,omitempty"`     // The page number to request
-		Limit     int    `url:"limit,omitempty"`     // The limit of results to be returned
-		From      string `url:"from,omitempty"`      // The date and time or the event id to search from
-		To        string `url:"to,omitempty"`        // The date and time or the event id to search to
-		SortOrder string `url:"sortorder,omitempty"` // Sort order (ASC/DESC)
+		Start     int    `form:"start,omitempty"`     // The page number to request
+		Limit     int    `form:"limit,omitempty"`     // The limit of results to be returned
+		From      string `form:"from,omitempty"`      // The date and time or the event id to search from
+		To        string `form:"to,omitempty"`        // The date and time or the event id to search to
+		SortOrder string `form:"sortorder,omitempty"` // Sort order (ASC/DESC)
 	}
 
 	// SyslogMessage represents a single syslog message for the syslogsink endpoint.

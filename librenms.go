@@ -320,5 +320,11 @@ func parseParams(v any) (*url.Values, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse query parameters: %w", err)
 	}
+	// 去掉空值
+	for k, v := range p {
+		if len(v) == 0 || v[0] == "" {
+			delete(p, k)
+		}
+	}
 	return &p, nil
 }

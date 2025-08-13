@@ -252,12 +252,12 @@ type (
 
 	// ComponentsQuery represents the query parameters for filtering GetComponents().
 	ComponentsQuery struct {
-		Type     string `url:"type,omitempty"`
-		ID       int    `url:"id,omitempty"`
-		Label    string `url:"label,omitempty"`
-		Status   string `url:"status,omitempty"`
-		Disabled bool   `url:"disabled,omitempty"`
-		Ignore   bool   `url:"ignore,omitempty"`
+		Type     string `form:"type,omitempty"`
+		ID       int    `form:"id,omitempty"`
+		Label    string `form:"label,omitempty"`
+		Status   string `form:"status,omitempty"`
+		Disabled bool   `form:"disabled,omitempty"`
+		Ignore   bool   `form:"ignore,omitempty"`
 	}
 
 	// DeviceComponent represents a component for a device.
@@ -314,17 +314,17 @@ type (
 
 	// DevicesQuery represents the query parameters for filtering GetDevices().
 	DevicesQuery struct {
-		DeviceID   int    `url:"device_id,omitempty"`
-		Display    string `url:"display,omitempty"`
-		Hostname   string `url:"hostname,omitempty"`
-		IPv4       string `url:"ipv4,omitempty"`
-		IPv6       string `url:"ipv6,omitempty"`
-		Location   string `url:"location,omitempty"`
-		LocationID int    `url:"location_id,omitempty"`
-		MACAddress string `url:"mac,omitempty"`
-		Order      string `url:"order,omitempty"`
-		OS         string `url:"os,omitempty"`
-		SysName    string `url:"sysName,omitempty"`
-		Type       string `url:"type,omitempty"`
+		DeviceID   int    `form:"device_id,omitempty"`
+		Display    string `form:"display,omitempty"`
+		Hostname   string `form:"hostname,omitempty"`
+		IPv4       string `form:"ipv4,omitempty"`
+		IPv6       string `form:"ipv6,omitempty"`
+		Location   string `form:"location,omitempty"`
+		LocationID int    `form:"location_id,omitempty"`
+		MACAddress string `form:"mac,omitempty"`
+		Order      string `form:"order,omitempty"`
+		OS         string `form:"os,omitempty"`
+		SysName    string `form:"sysName,omitempty"`
+		Type       string `form:"type,omitempty"`
 	}
 )

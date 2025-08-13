@@ -29,15 +29,15 @@ type (
 
 	// BGPQuery represents the query parameters for filtering BGP sessions
 	BGPQuery struct {
-		Hostname      string `url:"hostname,omitempty"`
-		ASN           int    `url:"asn,omitempty"`
-		RemoteASN     int    `url:"remote_asn,omitempty"`
-		RemoteAddress string `url:"remote_address,omitempty"`
-		LocalAddress  string `url:"local_address,omitempty"`
-		BGPDescr      string `url:"bgp_descr,omitempty"`
-		BGPState      string `url:"bgp_state,omitempty"`
-		BGPAdminState string `url:"bgp_adminstate,omitempty"`
-		BGPFamily     int    `url:"bgp_family,omitempty"`
+		Hostname      string `form:"hostname,omitempty"`
+		ASN           int    `form:"asn,omitempty"`
+		RemoteASN     int    `form:"remote_asn,omitempty"`
+		RemoteAddress string `form:"remote_address,omitempty"`
+		LocalAddress  string `form:"local_address,omitempty"`
+		BGPDescr      string `form:"bgp_descr,omitempty"`
+		BGPState      string `form:"bgp_state,omitempty"`
+		BGPAdminState string `form:"bgp_adminstate,omitempty"`
+		BGPFamily     int    `form:"bgp_family,omitempty"`
 	}
 
 	// BGPResponse represents a response containing BGP sessions
@@ -244,8 +244,8 @@ type (
 
 	// VRFQuery represents the query parameters for filtering VRFs
 	VRFQuery struct {
-		Hostname string `url:"hostname,omitempty"`
-		VRFName  string `url:"vrfname,omitempty"`
+		Hostname string `form:"hostname,omitempty"`
+		VRFName  string `form:"vrfname,omitempty"`
 	}
 
 	// MP LSService represents an MPLS service in LibreNMS
@@ -324,11 +324,11 @@ type (
 
 	// IPAddress represents an IP address in LibreNMS
 	IPAddress struct {
-		IPv4AddressID string `json:"ipv4_address_id,omitempty"`
+		IPv4AddressID int    `json:"ipv4_address_id,omitempty"`
 		IPv4Address   string `json:"ipv4_address,omitempty"`
-		IPv4Prefixlen string `json:"ipv4_prefixlen,omitempty"`
-		IPv4NetworkID string `json:"ipv4_network_id,omitempty"`
-		PortID        string `json:"port_id,omitempty"`
+		IPv4Prefixlen int    `json:"ipv4_prefixlen,omitempty"`
+		IPv4NetworkID int    `json:"ipv4_network_id,omitempty"`
+		PortID        int    `json:"port_id,omitempty"`
 		ContextName   string `json:"context_name,omitempty"`
 	}
 
@@ -340,7 +340,7 @@ type (
 
 	// IPNetwork represents an IP network in LibreNMS
 	IPNetwork struct {
-		IPv4NetworkID string `json:"ipv4_network_id,omitempty"`
+		IPv4NetworkID int    `json:"ipv4_network_id,omitempty"`
 		IPv4Network   string `json:"ipv4_network,omitempty"`
 		ContextName   string `json:"context_name,omitempty"`
 	}

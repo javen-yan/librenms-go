@@ -37,10 +37,10 @@ type (
 	//
 	// Documentation: https://docs.librenms.org/API/Alerts/#list_alerts
 	AlertsQuery struct {
-		Order    string `url:"order"`
-		RuleID   int    `url:"alert_rule"`
-		Severity string `url:"severity"` // "ok", "warning", "critical"
-		State    int    `url:"state"`    // 0 = ok, 1 = alert, 2 = ack
+		Order    string `form:"order"`
+		RuleID   int    `form:"alert_rule"`
+		Severity string `form:"severity"` // "ok", "warning", "critical"
+		State    int    `form:"state"`    // 0 = ok, 1 = alert, 2 = ack
 	}
 
 	// AlertsResponse represents the response from the alerts API endpoint.

@@ -96,7 +96,7 @@ type (
 	}
 
 	SwitchingQueryParams struct {
-		Columns string `url:"columns,omitempty"`
-		Filter  string `url:"filter,omitempty"`
+		Columns string `form:"columns,omitempty"`
+		Filter  string `form:"filter,omitempty"`
 	}
 )
